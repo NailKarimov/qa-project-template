@@ -1,0 +1,18 @@
+POST https://jsonplaceholder.typicode.com/posts
+
+Request body:
+{
+  "userId": 5,
+  "title": "Attollo acsi explicabo vigor voro validus argentum.",
+  "body": "Taedium tempus acer tactus decor quia arceo adversus uxor acidus. Spiculum vir synagoga terebro depromo adulescens. Aliquid laudantium vivo consequuntur recusandae calcar bellum."
+}
+
+Status: 201
+
+Response body:
+{
+  "userId": 5,
+  "title": "Attollo acsi explicabo vigor voro validus argentum.",
+  "body": "Taedium tempus acer tactus decor quia arceo adversus uxor acidus. Spiculum vir synagoga terebro depromo adulescens. Aliquid laudantium vivo consequuntur recusandae calcar bellum.",
+  "id": 101
+}
