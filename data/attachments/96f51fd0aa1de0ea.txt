@@ -1,0 +1,18 @@
+POST https://jsonplaceholder.typicode.com/posts
+
+Request body:
+{
+  "userId": 2,
+  "title": "Chirographum tantum concido.",
+  "body": "Earum beatae admiratio. Attollo cumque comprehendo comparo tamquam quae alias bellum tero. Verbera ambitus conspergo vulariter adhuc undique admitto eius tredecim."
+}
+
+Status: 201
+
+Response body:
+{
+  "userId": 2,
+  "title": "Chirographum tantum concido.",
+  "body": "Earum beatae admiratio. Attollo cumque comprehendo comparo tamquam quae alias bellum tero. Verbera ambitus conspergo vulariter adhuc undique admitto eius tredecim.",
+  "id": 101
+}
