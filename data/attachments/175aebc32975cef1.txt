@@ -1,0 +1,18 @@
+POST https://jsonplaceholder.typicode.com/posts
+
+Request body:
+{
+  "userId": 10,
+  "title": "Vulticulus toties verbum usitas.",
+  "body": "Cotidie sponte valetudo cupiditas deludo angelus. Aestas curriculum subiungo xiphias cariosus attonbitus arcus. Volo quo aliqua abscido ter adinventitias mollitia cupiditate admoveo sapiente."
+}
+
+Status: 201
+
+Response body:
+{
+  "userId": 10,
+  "title": "Vulticulus toties verbum usitas.",
+  "body": "Cotidie sponte valetudo cupiditas deludo angelus. Aestas curriculum subiungo xiphias cariosus attonbitus arcus. Volo quo aliqua abscido ter adinventitias mollitia cupiditate admoveo sapiente.",
+  "id": 101
+}
