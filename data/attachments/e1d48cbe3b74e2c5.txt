@@ -1,0 +1,18 @@
+POST https://jsonplaceholder.typicode.com/posts
+
+Request body:
+{
+  "userId": 6,
+  "title": "Voluptas desipio thesaurus cupiditas.",
+  "body": "Auxilium videlicet tondeo bardus peior aiunt decumbo cimentarius. Est vestigium apparatus amet autem suppellex addo templum cohors. Quaerat aperiam vallum utrum caterva pecto illo venustas vis casus."
+}
+
+Status: 201
+
+Response body:
+{
+  "userId": 6,
+  "title": "Voluptas desipio thesaurus cupiditas.",
+  "body": "Auxilium videlicet tondeo bardus peior aiunt decumbo cimentarius. Est vestigium apparatus amet autem suppellex addo templum cohors. Quaerat aperiam vallum utrum caterva pecto illo venustas vis casus.",
+  "id": 101
+}
