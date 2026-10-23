@@ -10,17 +10,17 @@ Click **Use this template** to start a new project with everything below already
 
 ## What is inside
 
-| Area          | Files                                              | Details                                                                                  |
-| ------------- | -------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| Page objects  | `src/pages`                                        | `BasePage` plus one class per page; locators use `data-test` attributes                  |
-| API clients   | `src/api`                                          | `ApiClient` attaches every request and response to the report; one client per resource   |
-| Test data     | `src/data`                                         | Factories built on Faker; override fields for boundary and negative cases                |
-| Fixtures      | `src/fixtures.ts`                                  | Tests receive ready objects: `async ({ loginPage, posts }) => …`                         |
-| Configuration | `config/env.ts`, `.env.example`                    | Every URL and credential can be overridden by an environment variable                    |
-| Tests         | `tests/ui`, `tests/api`                            | Two Playwright projects; `@smoke` tag for the critical path                              |
-| Code quality  | `eslint.config.mjs`, `.prettierrc.json`, `.husky/` | ESLint with Playwright rules, Prettier, pre-commit checks via lint-staged                |
-| CI            | `.github/workflows/tests.yml`                      | Runs on push, PR, nightly and on demand; lint, type check, tests; Allure to GitHub Pages |
-| Documentation | `docs/test-plan.md`, `docs/test-report.md`         | Templates based on ISO/IEC/IEEE 29119-3                                                  |
+| Area          | Files                                              | Details                                                                                       |
+| ------------- | -------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| Page objects  | `src/pages`                                        | `BasePage` plus one class per page; locators use `data-test` attributes                       |
+| API clients   | `src/api`                                          | `ApiClient` attaches every request and response to the report; one client per resource        |
+| Test data     | `src/data`                                         | Factories built on Faker; override fields for boundary and negative cases                     |
+| Fixtures      | `src/fixtures.ts`                                  | Tests receive ready objects: `async ({ loginPage, posts }) => …`                              |
+| Configuration | `config/env.ts`, `.env.example`                    | Every URL and credential can be overridden by an environment variable                         |
+| Tests         | `tests/ui`, `tests/api`                            | Two Playwright projects; `@smoke` tag for the critical path                                   |
+| Code quality  | `eslint.config.mjs`, `.prettierrc.json`, `.husky/` | ESLint with Playwright rules, Prettier, pre-commit checks via lint-staged                     |
+| CI            | `.github/workflows/tests.yml`                      | Runs on push, PR, nightly and on demand; lint, type check, tests; Allure to GitHub Pages      |
+| Documentation | `docs/test-plan.md`, `docs/test-report.md`         | Templates based on ISO/IEC/IEEE 29119-3; the portfolio layout in `docs/portfolio-standard.md` |
 
 The example tests run against public demo targets: [Sauce Demo](https://www.saucedemo.com) for UI and
 [JSONPlaceholder](https://jsonplaceholder.typicode.com) for API. Replace them with your system under test.
@@ -59,10 +59,13 @@ npm run allure:generate && npm run allure:open
 
 ## Definition of Done for a portfolio project
 
-- [ ] README: what is tested, which standard, how to run, link to the report, known limitations
-- [ ] Test plan and summary report in `docs/`
-- [ ] Tests run with one command locally and in CI
-- [ ] Allure report published with at least three runs of history
+Every repository of the portfolio follows one layout: [`docs/portfolio-standard.md`](docs/portfolio-standard.md).
+
+- [ ] README in the common order: at a glance, what is tested, findings, running it, structure, CI, documentation
+- [ ] Test plan and test summary report in `docs/` (ISO/IEC/IEEE 29119-3)
+- [ ] A text guide and an interactive guide for every tool or approach
+- [ ] Tests run with one command locally and in CI; reports published on GitHub Pages
+- [ ] A mutation check: bugs planted one at a time, and every one is caught
 - [ ] Lint, format and type checks pass; no secrets in the repository
 
 ## Conventions
@@ -71,3 +74,10 @@ npm run allure:generate && npm run allure:open
 - No fixed sleeps: rely on Playwright auto-waiting (`playwright/no-wait-for-timeout` is an error).
 - Test names describe expected behaviour: _"locked out user gets an error message"_.
 - One retry in CI only; retries stay visible in the report.
+
+## Part of a portfolio
+
+The template behind the 13 test automation projects of [Nail Karimov](https://github.com/NailKarimov):
+[all projects](https://github.com/NailKarimov) ·
+[testing map](https://nailkarimov.github.io/api-test-automation/testing-map.html) ·
+[toolbox](https://nailkarimov.github.io/api-test-automation/toolbox.html).
