@@ -1,0 +1,18 @@
+POST https://jsonplaceholder.typicode.com/posts
+
+Request body:
+{
+  "userId": 8,
+  "title": "Aspicio adhaero cultellus sursum stultus adeo basium.",
+  "body": "Admoneo termes desolo cibo truculenter cariosus dolorem sollicito solio. Curtus adduco combibo explicabo pauci coadunatio clam vulpes. Cui antea curia vomica voluptatibus cornu."
+}
+
+Status: 201
+
+Response body:
+{
+  "userId": 8,
+  "title": "Aspicio adhaero cultellus sursum stultus adeo basium.",
+  "body": "Admoneo termes desolo cibo truculenter cariosus dolorem sollicito solio. Curtus adduco combibo explicabo pauci coadunatio clam vulpes. Cui antea curia vomica voluptatibus cornu.",
+  "id": 101
+}
