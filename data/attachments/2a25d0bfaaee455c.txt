@@ -1,0 +1,18 @@
+POST https://jsonplaceholder.typicode.com/posts
+
+Request body:
+{
+  "userId": 1,
+  "title": "Veritas crapula totidem certe.",
+  "body": "Deficio terra amita aedificium undique comparo aegrus. Chirographum complectus arbitro. Comedo torrens stillicidium tristis deputo tenuis cupiditas."
+}
+
+Status: 201
+
+Response body:
+{
+  "userId": 1,
+  "title": "Veritas crapula totidem certe.",
+  "body": "Deficio terra amita aedificium undique comparo aegrus. Chirographum complectus arbitro. Comedo torrens stillicidium tristis deputo tenuis cupiditas.",
+  "id": 101
+}
