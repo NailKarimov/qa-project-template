@@ -1,0 +1,18 @@
+POST https://jsonplaceholder.typicode.com/posts
+
+Request body:
+{
+  "userId": 7,
+  "title": "Celebrer cernuus iusto verto votum.",
+  "body": "Aestas degero beatae vitae accommodo cunctatio deputo accusamus adfero patrocinor. Via communis utroque antepono amor timidus clarus cupiditas. Tabula sulum auxilium aer."
+}
+
+Status: 201
+
+Response body:
+{
+  "userId": 7,
+  "title": "Celebrer cernuus iusto verto votum.",
+  "body": "Aestas degero beatae vitae accommodo cunctatio deputo accusamus adfero patrocinor. Via communis utroque antepono amor timidus clarus cupiditas. Tabula sulum auxilium aer.",
+  "id": 101
+}
