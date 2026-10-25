@@ -1,0 +1,18 @@
+POST https://jsonplaceholder.typicode.com/posts
+
+Request body:
+{
+  "userId": 5,
+  "title": "Arguo viridis tumultus tamen.",
+  "body": "Autem cibus sustineo aspernatur demens. Ambitus tumultus tepesco teneo arma trado consuasor voco caveo. Alveus aut auxilium confugo ciminatio soleo fugit."
+}
+
+Status: 201
+
+Response body:
+{
+  "userId": 5,
+  "title": "Arguo viridis tumultus tamen.",
+  "body": "Autem cibus sustineo aspernatur demens. Ambitus tumultus tepesco teneo arma trado consuasor voco caveo. Alveus aut auxilium confugo ciminatio soleo fugit.",
+  "id": 101
+}

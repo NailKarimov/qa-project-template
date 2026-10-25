@@ -1,0 +1,1268 @@
+<title>Протокольный стенд: старт</title>
+<meta name="claude:viewport-fit-sides" content="cover" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&family=Unbounded:wght@500;600&family=JetBrains+Mono:wght@400;600&display=swap"
+/>
+<style>
+  /* Layout: одна колонка 920px; лента «трассы» анализатора как главный образ; секции по порядку этапа 0. */
+  :root {
+    --bg: #f3f5f2;
+    --surface: #ffffff;
+    --sunk: #e7ebe6;
+    --line: #cfd6cd;
+    --fg: #172019;
+    --muted: #56635a;
+    --accent: #1d6b5a;
+    --accent-soft: #dcefe8;
+    --ch0: #b5651d;
+    --ch1: #2f5fb3;
+    --pass: #1f8a4c;
+    --warn: #a86d00;
+    --font-display: 'Unbounded', 'Golos Text', system-ui, sans-serif;
+    --font-body: 'Golos Text', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, Consolas, monospace;
+    --r: 8px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) {
+      --bg: #10140f;
+      --surface: #181e17;
+      --sunk: #20281f;
+      --line: #314030;
+      --fg: #e5ece3;
+      --muted: #9aa99a;
+      --accent: #5cc4a8;
+      --accent-soft: #1b3129;
+      --ch0: #e5a159;
+      --ch1: #7fa6ef;
+      --pass: #5bd08e;
+      --warn: #e3ac45;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme='dark'] {
+    --bg: #10140f;
+    --surface: #181e17;
+    --sunk: #20281f;
+    --line: #314030;
+    --fg: #e5ece3;
+    --muted: #9aa99a;
+    --accent: #5cc4a8;
+    --accent-soft: #1b3129;
+    --ch0: #e5a159;
+    --ch1: #7fa6ef;
+    --pass: #5bd08e;
+    --warn: #e3ac45;
+    color-scheme: dark;
+  }
+  * {
+    box-sizing: border-box;
+  }
+  html[data-lang='ru'] .en,
+  html[data-lang='en'] .ru {
+    display: none !important;
+  }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-body);
+    font-size: 15.5px;
+    line-height: 1.55;
+  }
+  .wrap {
+    max-width: 920px;
+    margin: 0 auto;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 28px 72px;
+    display: grid;
+    gap: 40px;
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(22px, 4vw, 34px);
+    line-height: 1.15;
+    margin: 0;
+    text-wrap: balance;
+    letter-spacing: -0.01em;
+  }
+  h2 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 19px;
+    margin: 0;
+    text-wrap: balance;
+  }
+  h3 {
+    font-size: 15.5px;
+    margin: 0;
+    font-weight: 600;
+  }
+  p {
+    margin: 0;
+    max-width: 68ch;
+  }
+  code,
+  .mono {
+    font-family: var(--font-mono);
+    font-size: 0.88em;
+  }
+  code {
+    background: var(--sunk);
+    padding: 1px 5px;
+    border-radius: 4px;
+  }
+  a {
+    color: var(--accent);
+  }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .muted {
+    color: var(--muted);
+  }
+  section {
+    display: grid;
+    gap: 16px;
+  }
+  .top {
+    display: grid;
+    gap: 14px;
+  }
+  .bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .lang {
+    display: flex;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .lang button {
+    font: 600 12.5px var(--font-mono);
+    background: var(--surface);
+    color: var(--muted);
+    border: 0;
+    padding: 6px 12px;
+    cursor: pointer;
+  }
+  .lang button[aria-pressed='true'] {
+    background: var(--accent);
+    color: var(--surface);
+  }
+  button:focus-visible,
+  a:focus-visible,
+  summary:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  /* Трасса анализатора */
+  .scope {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    padding: 14px 14px 10px;
+    display: grid;
+    gap: 8px;
+  }
+  .scope-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .scroll {
+    overflow-x: auto;
+  }
+  svg {
+    display: block;
+  }
+  svg text {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    fill: var(--muted);
+  }
+  svg .grid {
+    stroke: var(--line);
+    stroke-width: 1;
+  }
+  svg .tr0 {
+    stroke: var(--ch0);
+    stroke-width: 2;
+    fill: none;
+  }
+  svg .tr1 {
+    stroke: var(--ch1);
+    stroke-width: 2;
+    fill: none;
+  }
+  svg .dec {
+    fill: var(--accent-soft);
+    stroke: var(--accent);
+    stroke-width: 1;
+  }
+  svg .dect {
+    fill: var(--accent);
+    font-weight: 600;
+  }
+  svg .ch0 {
+    fill: var(--ch0);
+    font-weight: 600;
+  }
+  svg .ch1 {
+    fill: var(--ch1);
+    font-weight: 600;
+  }
+  .scope-controls {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    align-items: center;
+    font-size: 13px;
+  }
+  .chip {
+    font: 12.5px var(--font-mono);
+    padding: 4px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--fg);
+    cursor: pointer;
+  }
+  .chip[aria-pressed='true'] {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  /* Задачи этапа */
+  .tasks {
+    display: grid;
+    gap: 0;
+    border-top: 1px solid var(--line);
+  }
+  .task {
+    display: grid;
+    grid-template-columns: 120px minmax(0, 1fr);
+    gap: 14px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .who {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    padding-top: 2px;
+  }
+  .who.done {
+    color: var(--pass);
+  }
+  .who.you {
+    color: var(--warn);
+  }
+  .who.pair {
+    color: var(--ch1);
+  }
+  .task .body {
+    display: grid;
+    gap: 4px;
+    min-width: 0;
+  }
+  @media (max-width: 560px) {
+    .task {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 4px;
+    }
+  }
+
+  /* Три линии */
+  .links {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 2.2fr);
+    gap: 12px;
+    align-items: stretch;
+  }
+  .suite {
+    background: var(--fg);
+    color: var(--bg);
+    border-radius: var(--r);
+    padding: 16px;
+    display: grid;
+    gap: 8px;
+    align-content: center;
+  }
+  .suite code {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+  }
+  .arrow {
+    display: grid;
+    place-items: center;
+    color: var(--muted);
+    font-family: var(--font-mono);
+  }
+  .lanes {
+    display: grid;
+    gap: 8px;
+  }
+  .lane {
+    border: 1px solid var(--line);
+    background: var(--surface);
+    border-radius: var(--r);
+    padding: 10px 12px;
+    display: grid;
+    grid-template-columns: 150px minmax(0, 1fr);
+    gap: 10px;
+    align-items: center;
+  }
+  .lane .url {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    color: var(--accent);
+    font-weight: 600;
+    overflow-wrap: anywhere;
+  }
+  .lane .what {
+    font-size: 13.5px;
+    display: grid;
+    gap: 2px;
+    min-width: 0;
+  }
+  .tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted);
+  }
+  @media (max-width: 700px) {
+    .links {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .arrow {
+      transform: rotate(90deg);
+      height: 24px;
+    }
+    .lane {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 4px;
+    }
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 14px;
+  }
+  th,
+  td {
+    text-align: left;
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  th {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 600;
+  }
+  td.num,
+  th.num {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    font-family: var(--font-mono);
+  }
+  .ok {
+    color: var(--pass);
+    font-weight: 600;
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+  }
+  .was {
+    color: var(--warn);
+    font-family: var(--font-mono);
+    font-size: 12px;
+  }
+
+  .wiring {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .pin {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    padding: 12px;
+    display: grid;
+    gap: 4px;
+  }
+  .pin b {
+    font-family: var(--font-mono);
+    font-size: 15px;
+  }
+  .pin.c0 b {
+    color: var(--ch0);
+  }
+  .pin.c1 b {
+    color: var(--ch1);
+  }
+  @media (max-width: 560px) {
+    .wiring {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+  ol.steps {
+    margin: 0;
+    padding-left: 22px;
+    display: grid;
+    gap: 6px;
+    max-width: 68ch;
+  }
+
+  .gloss {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 28px;
+  }
+  .gloss div {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--line);
+    display: grid;
+    gap: 2px;
+    min-width: 0;
+  }
+  .gloss dt {
+    font-weight: 600;
+  }
+  .gloss dd {
+    margin: 0;
+    font-size: 14px;
+    color: var(--muted);
+  }
+  @media (max-width: 640px) {
+    .gloss {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+  pre {
+    background: var(--sunk);
+    border-radius: var(--r);
+    padding: 12px 14px;
+    overflow-x: auto;
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .foot {
+    font-size: 13px;
+    color: var(--muted);
+    display: grid;
+    gap: 6px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      transition: none !important;
+    }
+  }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="bar">
+      <span class="eyebrow"
+        ><span class="ru">Протоколы энергетики · этап 0</span
+        ><span class="en">Energy protocols · stage 0</span></span
+      >
+      <div class="lang" role="group" aria-label="Language">
+        <button id="lang-ru" aria-pressed="true">RU</button>
+        <button id="lang-en" aria-pressed="false">EN</button>
+      </div>
+    </div>
+    <h1>
+      <span class="ru">Один набор тестов: в памяти, на виртуальном порту и на плате</span
+      ><span class="en">One suite: in memory, on a virtual port and on a board</span>
+    </h1>
+    <p class="muted">
+      <span class="ru"
+        >Стартовый шаблон на Python + pytest для четырёх новых репозиториев и первый обмен байтами с ESP32,
+        который видно в логическом анализаторе.</span
+      ><span class="en"
+        >A Python + pytest starter for the four new repositories, and the first byte exchange with an ESP32,
+        visible on a logic analyzer.</span
+      >
+    </p>
+  </header>
+
+  <section aria-labelledby="h-scope">
+    <h2 id="h-scope">
+      <span class="ru">Как байт выглядит на проводе</span
+      ><span class="en">What a byte looks like on the wire</span>
+    </h2>
+    <div class="scope">
+      <div class="scope-head">
+        <span>UART 115200 8N1 · <span id="bytelabel">0x55 'U'</span></span
+        ><span
+          ><span class="ru">1 бит = 8,68 мкс · байт = 86,8 мкс</span
+          ><span class="en">1 bit = 8.68 µs · byte = 86.8 µs</span></span
+        >
+      </div>
+      <div class="scroll">
+        <svg
+          id="trace"
+          viewBox="0 0 720 150"
+          width="720"
+          height="150"
+          role="img"
+          aria-label="UART waveform"
+        ></svg>
+      </div>
+      <div class="scope-controls">
+        <span class="muted"><span class="ru">Байт:</span><span class="en">Byte:</span></span>
+        <button class="chip" data-byte="85" aria-pressed="true">0x55 'U'</button>
+        <button class="chip" data-byte="17" aria-pressed="false">
+          0x11 <span class="ru">адрес</span><span class="en">address</span>
+        </button>
+        <button class="chip" data-byte="196" aria-pressed="false">0xC4 CRC</button>
+        <button class="chip" data-byte="0" aria-pressed="false">0x00</button>
+      </div>
+    </div>
+    <p>
+      <span class="ru"
+        >Линия в покое — единица. Стартовый бит опускает её в ноль, дальше 8 бит данных младшим вперёд,
+        стоповый бит возвращает в единицу. У <code>0x55</code> перепад в каждой ячейке, поэтому по нему проще
+        всего проверить скорость на экране.</span
+      ><span class="en"
+        >An idle line is high. The start bit pulls it low, then 8 data bits go out least significant first,
+        and the stop bit returns the line high. <code>0x55</code> has an edge in every cell, which makes it
+        the easiest byte for checking the baud rate on screen.</span
+      >
+    </p>
+  </section>
+
+  <section aria-labelledby="h-tasks">
+    <h2 id="h-tasks">
+      <span class="ru">Четыре задачи этапа 0</span><span class="en">The four tasks of stage 0</span>
+    </h2>
+    <div class="tasks">
+      <div class="task">
+        <span class="who done"><span class="ru">готово</span><span class="en">done</span></span>
+        <div class="body">
+          <h3>
+            <span class="ru">Шаблон на Python + pytest</span><span class="en">Python + pytest template</span>
+          </h3>
+          <p class="muted">
+            <span class="ru"
+              >Папка <code>python/</code> в qa-project-template: 30 тестов, 8/8 мутантов, CI на двух
+              линиях.</span
+            ><span class="en"
+              >The <code>python/</code> folder in qa-project-template: 30 tests, 8/8 mutants, CI on two
+              links.</span
+            >
+          </p>
+        </div>
+      </div>
+      <div class="task">
+        <span class="who you"><span class="ru">вы</span><span class="en">you</span></span>
+        <div class="body">
+          <h3>
+            <span class="ru">Окружение: WSL2 или Linux</span
+            ><span class="en">Environment: WSL2 or Linux</span>
+          </h3>
+          <p class="muted">
+            <span class="ru"
+              >Python 3.12, Docker, Wireshark, can-utils, socat. Что не хватает, покажет
+              <code>bash scripts/check-env.sh</code>.</span
+            ><span class="en"
+              >Python 3.12, Docker, Wireshark, can-utils, socat. <code>bash scripts/check-env.sh</code> lists
+              what is missing.</span
+            >
+          </p>
+        </div>
+      </div>
+      <div class="task">
+        <span class="who you"><span class="ru">вы</span><span class="en">you</span></span>
+        <div class="body">
+          <h3><span class="ru">Купить базовый набор</span><span class="en">Buy the basic kit</span></h3>
+          <p class="muted">
+            <span class="ru"
+              >Мультиметр, макетка и провода, блок питания, логический анализатор и одна плата ESP32. Около
+              90–125 €.</span
+            ><span class="en"
+              >Multimeter, breadboard and wires, power supply, logic analyzer and one ESP32 board. About
+              €90–125.</span
+            >
+          </p>
+        </div>
+      </div>
+      <div class="task">
+        <span class="who pair"><span class="ru">вместе</span><span class="en">together</span></span>
+        <div class="body">
+          <h3>
+            <span class="ru">ESP32 ↔ ноутбук по UART</span><span class="en">ESP32 ↔ laptop over UART</span>
+          </h3>
+          <p class="muted">
+            <span class="ru"
+              >Прошивка и скрипт готовы; когда придёт железо — подключаем и смотрим байты в PulseView.</span
+            ><span class="en"
+              >Firmware and script are ready; when the hardware arrives, connect it and read the bytes in
+              PulseView.</span
+            >
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-links">
+    <h2 id="h-links">
+      <span class="ru">Одни тесты, три линии</span><span class="en">One suite, three links</span>
+    </h2>
+    <div class="links">
+      <div class="suite">
+        <span class="eyebrow" style="color: inherit; opacity: 0.7">pytest</span>
+        <h3>
+          <span class="ru">Тесты знают только</span><span class="en">Tests only know</span>
+          <code>Transport</code>
+        </h3>
+        <p style="font-size: 13.5px; opacity: 0.85">
+          <code>write(bytes)</code>, <code>read(n, timeout)</code>
+        </p>
+      </div>
+      <div class="arrow" aria-hidden="true">BUS_URL →</div>
+      <div class="lanes">
+        <div class="lane">
+          <span class="url">memory://</span>
+          <div class="what">
+            <span
+              ><span class="ru">Пара сокетов в одном процессе → симулятор</span
+              ><span class="en">Socket pair in one process → simulator</span></span
+            ><span class="tag"
+              ><span class="ru">каждый пуш · идеальный кабель</span
+              ><span class="en">every push · a perfect cable</span></span
+            >
+          </div>
+        </div>
+        <div class="lane">
+          <span class="url">socat://</span>
+          <div class="what">
+            <span
+              ><span class="ru">Два псевдотерминала, связанных socat → симулятор через pyserial</span
+              ><span class="en">Two pseudo-terminals joined by socat → simulator through pyserial</span></span
+            ><span class="tag"
+              ><span class="ru">каждый пуш · настоящий драйвер порта</span
+              ><span class="en">every push · a real serial driver</span></span
+            >
+          </div>
+        </div>
+        <div class="lane">
+          <span class="url">/dev/ttyUSB0</span>
+          <div class="what">
+            <span
+              ><span class="ru">USB-чип платы → провода TX/RX → прошивка ESP32</span
+              ><span class="en">Board's USB chip → TX/RX wires → ESP32 firmware</span></span
+            ><span class="tag"
+              >HIL=1 · <span class="ru">стенд, ночью с Raspberry Pi</span
+              ><span class="en">bench, nightly from a Raspberry Pi</span></span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="scroll">
+      <table>
+        <thead>
+          <tr>
+            <th><span class="ru">Метка</span><span class="en">Marker</span></th>
+            <th>memory</th>
+            <th>socat</th>
+            <th><span class="ru">плата</span><span class="en">board</span></th>
+            <th><span class="ru">Зачем</span><span class="en">Why</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="ru">без метки</span><span class="en">none</span></td>
+            <td class="ok">✓</td>
+            <td class="ok">✓</td>
+            <td class="ok">✓</td>
+            <td>
+              <span class="ru">Поведение устройства: ответ, тишина, восстановление</span
+              ><span class="en">Device behaviour: answer, silence, recovery</span>
+            </td>
+          </tr>
+          <tr>
+            <td><code>simulator</code></td>
+            <td class="ok">✓</td>
+            <td class="ok">✓</td>
+            <td class="muted">—</td>
+            <td>
+              <span class="ru"
+                >Читают счётчики симулятора (ошибки CRC, broadcast); у платы такого окна нет</span
+              ><span class="en"
+                >Read simulator counters (CRC errors, broadcasts); a board has no such window</span
+              >
+            </td>
+          </tr>
+          <tr>
+            <td><code>hardware</code></td>
+            <td class="muted">—</td>
+            <td class="muted">—</td>
+            <td class="ok">✓</td>
+            <td>
+              <span class="ru">200 обменов без потерь, медиана ответа меньше 50 мс</span
+              ><span class="en">200 round trips without loss, median reply under 50 ms</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      <span class="ru"
+        >Если в облаке зелено, а на стенде красно, ошибка в линии или прошивке, а не в логике протокола. Ради
+        этого вывода тесты и не делятся на «облачные» и «железные».</span
+      ><span class="en"
+        >Green in the cloud and red on the bench means the fault is in the line or the firmware, not in the
+        protocol logic. That is why the suite is not split into cloud and hardware copies.</span
+      >
+    </p>
+  </section>
+
+  <section aria-labelledby="h-uart">
+    <h2 id="h-uart">
+      <span class="ru">Первый обмен: подключение и PulseView</span
+      ><span class="en">First exchange: wiring and PulseView</span>
+    </h2>
+    <div class="wiring">
+      <div class="pin c0">
+        <b>CH0 → TX0</b
+        ><span class="muted"
+          >GPIO1 · <span class="ru">ответы платы</span><span class="en">board replies</span></span
+        >
+      </div>
+      <div class="pin c1">
+        <b>CH1 → RX0</b
+        ><span class="muted"
+          >GPIO3 · <span class="ru">запросы ноутбука</span><span class="en">laptop requests</span></span
+        >
+      </div>
+      <div class="pin">
+        <b>GND → GND</b
+        ><span class="muted"
+          ><span class="ru">общая земля обязательна</span
+          ><span class="en">common ground is required</span></span
+        >
+      </div>
+    </div>
+    <ol class="steps">
+      <li>
+        <span class="ru"
+          >Залить <code>bench/uart-echo/uart_echo.ino</code> в ESP32 (Arduino IDE, плата «ESP32 Dev
+          Module»).</span
+        ><span class="en"
+          >Flash <code>bench/uart-echo/uart_echo.ino</code> to the ESP32 (Arduino IDE, board "ESP32 Dev
+          Module").</span
+        >
+      </li>
+      <li>
+        <span class="ru">PulseView: драйвер fx2lafw, 2 МГц, 1 M выборок, триггер — спад на CH1.</span
+        ><span class="en"
+          >PulseView: driver fx2lafw, 2 MHz, 1 M samples, trigger on a falling edge of CH1.</span
+        >
+      </li>
+      <li>
+        <span class="ru">Декодер UART: 115200, 8 бит, без чётности, 1 стоп; RX = CH1, TX = CH0.</span
+        ><span class="en">UART decoder: 115200, 8 bits, no parity, 1 stop; RX = CH1, TX = CH0.</span>
+      </li>
+      <li>
+        <span class="ru"
+          >Запустить <code>python probe.py /dev/ttyUSB0</code> (в Windows — <code>COM5</code>).</span
+        ><span class="en">Run <code>python probe.py /dev/ttyUSB0</code> (on Windows <code>COM5</code>).</span>
+      </li>
+      <li>
+        <span class="ru">Затем весь набор на плате: <code>BUS_URL=/dev/ttyUSB0 HIL=1 pytest</code>.</span
+        ><span class="en"
+          >Then the whole suite on the board: <code>BUS_URL=/dev/ttyUSB0 HIL=1 pytest</code>.</span
+        >
+      </li>
+    </ol>
+    <div class="scroll">
+      <table>
+        <thead>
+          <tr>
+            <th><span class="ru">Что видно</span><span class="en">What you see</span></th>
+            <th><span class="ru">Что это значит</span><span class="en">What it means</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <span class="ru">Ошибки кадра на каждом байте</span
+              ><span class="en">Framing errors on every byte</span>
+            </td>
+            <td>
+              <span class="ru">Скорость не совпадает на сторонах или в декодере</span
+              ><span class="en">Baud rate differs on one side or in the decoder</span>
+            </td>
+          </tr>
+          <tr>
+            <td><span class="ru">Есть RX, нет TX</span><span class="en">RX traffic, nothing on TX</span></td>
+            <td>
+              <span class="ru">Прошивка не работает, не тот адрес или не сошёлся CRC</span
+              ><span class="en">Firmware not running, wrong address or a CRC mismatch</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span class="ru">Ответ в PulseView есть, а скрипт ничего не получил</span
+              ><span class="en">Reply in PulseView, the script got nothing</span>
+            </td>
+            <td>
+              <span class="ru">Открыт не тот порт или слишком короткий таймаут</span
+              ><span class="en">Wrong port opened or the timeout is too short</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="muted">
+      <span class="ru"
+        >В WSL2 порт сначала нужно передать в Linux: <code>usbipd list</code>, затем
+        <code>usbipd attach --wsl --busid &lt;id&gt;</code>. PulseView проще запускать прямо в Windows.</span
+      ><span class="en"
+        >On WSL2 the port must be attached to Linux first: <code>usbipd list</code>, then
+        <code>usbipd attach --wsl --busid &lt;id&gt;</code>. PulseView is simpler on Windows itself.</span
+      >
+    </p>
+  </section>
+
+  <section aria-labelledby="h-mut">
+    <h2 id="h-mut">
+      <span class="ru">Проверка мутантами: 8 из 8</span><span class="en">Mutation check: 8 of 8</span>
+    </h2>
+    <div class="scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th><span class="ru">Посаженный баг</span><span class="en">Planted bug</span></th>
+            <th><span class="ru">Кто поймал</span><span class="en">Caught by</span></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="mono">M1</td>
+            <td><span class="ru">CRC начинается с 0</span><span class="en">CRC starts from 0</span></td>
+            <td><span class="ru">известные векторы</span><span class="en">known vectors</span></td>
+            <td class="ok">caught</td>
+          </tr>
+          <tr>
+            <td class="mono">M2</td>
+            <td>
+              <span class="ru">Неотражённый полином</span><span class="en">Non-reflected polynomial</span>
+            </td>
+            <td><span class="ru">известные векторы</span><span class="en">known vectors</span></td>
+            <td class="ok">caught</td>
+          </tr>
+          <tr>
+            <td class="mono">M3</td>
+            <td>
+              <span class="ru">CRC старшим байтом вперёд</span><span class="en">CRC high byte first</span>
+            </td>
+            <td><span class="ru">порядок байт на проводе</span><span class="en">wire byte order</span></td>
+            <td class="ok">caught</td>
+          </tr>
+          <tr>
+            <td class="mono">M4</td>
+            <td>
+              <span class="ru">Лишние байты после кадра принимаются</span
+              ><span class="en">Trailing bytes accepted</span>
+            </td>
+            <td><span class="ru">битые кадры</span><span class="en">malformed frames</span></td>
+            <td class="ok">caught</td>
+          </tr>
+          <tr>
+            <td class="mono">M5</td>
+            <td>
+              <span class="ru">Предел длины сдвинут на единицу</span
+              ><span class="en">Size limit off by one</span>
+            </td>
+            <td><span class="ru">граница 33 байта</span><span class="en">33-byte boundary</span></td>
+            <td class="ok">caught</td>
+          </tr>
+          <tr>
+            <td class="mono">M6</td>
+            <td>
+              <span class="ru">Отвечает на любой адрес</span><span class="en">Answers any address</span>
+            </td>
+            <td>
+              <span class="ru">тишина для чужого адреса</span
+              ><span class="en">silence for another address</span>
+            </td>
+            <td class="ok">caught</td>
+          </tr>
+          <tr>
+            <td class="mono">M7</td>
+            <td><span class="ru">Отвечает на broadcast</span><span class="en">Answers a broadcast</span></td>
+            <td><span class="ru">тишина на broadcast</span><span class="en">silence on broadcast</span></td>
+            <td>
+              <span class="ok">caught</span>
+              <span class="was"
+                ><span class="ru">· был эквивалентным</span><span class="en">· was equivalent</span></span
+              >
+            </td>
+          </tr>
+          <tr>
+            <td class="mono">M8</td>
+            <td>
+              <span class="ru">Нет сброса после ошибки длины</span
+              ><span class="en">No flush after a length error</span>
+            </td>
+            <td>
+              <span class="ru">восстановление после мусора</span><span class="en">recovery after junk</span>
+            </td>
+            <td>
+              <span class="ok">caught</span>
+              <span class="was"
+                ><span class="ru">· выжил в 1-м раунде</span><span class="en">· survived round 1</span></span
+              >
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      <span class="ru"
+        >M7 сначала ничего не менял: ответ на broadcast всё равно отсекала следующая проверка адреса. Такой
+        мутант называется эквивалентным, его переписали. M8 выжил, потому что после плохого заголовка тест
+        ничего не присылал. Теперь он шлёт байты, похожие на начало следующего кадра, и устройство без сброса
+        проглатывает следующий запрос.</span
+      ><span class="en"
+        >M7 first changed nothing: the following address check still blocked the broadcast reply. That is an
+        equivalent mutant, so it was rewritten. M8 survived because the test sent nothing after the bad
+        header. It now sends bytes that look like the start of the next frame, and a device without the flush
+        swallows the next request.</span
+      >
+    </p>
+  </section>
+
+  <section aria-labelledby="h-kit">
+    <h2 id="h-kit"><span class="ru">Покупки этапа 0</span><span class="en">Stage 0 shopping</span></h2>
+    <div class="scroll">
+      <table>
+        <thead>
+          <tr>
+            <th><span class="ru">Что</span><span class="en">Item</span></th>
+            <th><span class="ru">На что смотреть</span><span class="en">What to look for</span></th>
+            <th class="num">≈ €</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="ru">Логический анализатор</span><span class="en">Logic analyzer</span></td>
+            <td>
+              <span class="ru">8 каналов, 24 МГц, чип CY7C68013A — работает с PulseView через fx2lafw</span
+              ><span class="en">8 channels, 24 MHz, CY7C68013A chip — works with PulseView via fx2lafw</span>
+            </td>
+            <td class="num">8–15</td>
+          </tr>
+          <tr>
+            <td><span class="ru">Мультиметр</span><span class="en">Multimeter</span></td>
+            <td>
+              <span class="ru">с прозвонкой и измерением сопротивления; true RMS не обязателен</span
+              ><span class="en">continuity and resistance; true RMS not required</span>
+            </td>
+            <td class="num">20–45</td>
+          </tr>
+          <tr>
+            <td><span class="ru">Блок питания</span><span class="en">Power supply</span></td>
+            <td>
+              <span class="ru">лабораторный 30 В / 5 А с ограничением тока, или адаптеры 5 и 12 В</span
+              ><span class="en">bench 30 V / 5 A with current limit, or 5 V and 12 V adapters</span>
+            </td>
+            <td class="num">35–50</td>
+          </tr>
+          <tr>
+            <td><span class="ru">Макетка и провода</span><span class="en">Breadboard and wires</span></td>
+            <td>
+              <span class="ru">830 точек, перемычки папа-папа и папа-мама</span
+              ><span class="en">830 points, male-male and male-female jumpers</span>
+            </td>
+            <td class="num">8–12</td>
+          </tr>
+          <tr>
+            <td>ESP32 DevKit</td>
+            <td>
+              <span class="ru"
+                >с USB-чипом CP2102 или CH340 и кабелем для данных; одна из двух плат этапа 1, купленная
+                раньше</span
+              ><span class="en"
+                >with a CP2102 or CH340 USB chip and a data cable; one of the two stage 1 boards, bought
+                early</span
+              >
+            </td>
+            <td class="num">6–10</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="2">
+              <b><span class="ru">Итого</span><span class="en">Total</span></b>
+              <span class="muted"
+                ><span class="ru">· цены примерные, проверяем перед заказом</span
+                ><span class="en">· approximate, checked before ordering</span></span
+              >
+            </td>
+            <td class="num"><b>≈ 90–125</b></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-tools">
+    <h2 id="h-tools">
+      <span class="ru">Инструменты и альтернативы</span><span class="en">Tools and alternatives</span>
+    </h2>
+    <div class="scroll">
+      <table>
+        <thead>
+          <tr>
+            <th><span class="ru">Инструмент</span><span class="en">Tool</span></th>
+            <th><span class="ru">Что делает</span><span class="en">What it does</span></th>
+            <th><span class="ru">Вместо него</span><span class="en">Instead</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>socat</td>
+            <td>
+              <span class="ru">Соединяет два псевдотерминала в виртуальный кабель</span
+              ><span class="en">Joins two pseudo-terminals into a virtual cable</span>
+            </td>
+            <td>tty0tty, com0com (Windows)</td>
+          </tr>
+          <tr>
+            <td>pyserial</td>
+            <td>
+              <span class="ru">Последовательные порты из Python, настоящие и виртуальные</span
+              ><span class="en">Serial ports from Python, real and virtual</span>
+            </td>
+            <td>pyserial-asyncio</td>
+          </tr>
+          <tr>
+            <td>Hypothesis</td>
+            <td>
+              <span class="ru">Генерирует входы для свойств: любой кадр, любой перевёрнутый бит</span
+              ><span class="en">Generates inputs for properties: any frame, any flipped bit</span>
+            </td>
+            <td><span class="ru">параметризация</span><span class="en">parametrisation</span></td>
+          </tr>
+          <tr>
+            <td>Wireshark</td>
+            <td>
+              <span class="ru">Читает Modbus TCP, OCPP по WebSocket, CAN</span
+              ><span class="en">Reads Modbus TCP, OCPP over WebSocket, CAN</span>
+            </td>
+            <td>tshark, tcpdump</td>
+          </tr>
+          <tr>
+            <td>can-utils</td>
+            <td>
+              <code>candump</code>, <code>cansend</code> <span class="ru">на SocketCAN</span
+              ><span class="en">on SocketCAN</span>
+            </td>
+            <td>python-can</td>
+          </tr>
+          <tr>
+            <td>PulseView</td>
+            <td>
+              <span class="ru">Показывает и расшифровывает запись анализатора</span
+              ><span class="en">Shows and decodes the analyzer capture</span>
+            </td>
+            <td>
+              <span class="ru">Saleae Logic 2 (только для их железа)</span
+              ><span class="en">Saleae Logic 2 (their hardware only)</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-gloss">
+    <h2 id="h-gloss"><span class="ru">Термины</span><span class="en">Glossary</span></h2>
+    <dl class="gloss">
+      <div>
+        <dt>UART, 8N1</dt>
+        <dd>
+          <span class="ru">Последовательный порт. 8N1 — 8 бит данных, без чётности, 1 стоповый бит.</span
+          ><span class="en">Serial port. 8N1 means 8 data bits, no parity, 1 stop bit.</span>
+        </dd>
+      </div>
+      <div>
+        <dt><span class="ru">Бод</span><span class="en">Baud</span></dt>
+        <dd>
+          <span class="ru"
+            >Символов в секунду; у UART один символ — один бит. 115200 бод → 8,68 мкс на бит.</span
+          ><span class="en"
+            >Symbols per second; on UART one symbol is one bit. 115200 baud → 8.68 µs per bit.</span
+          >
+        </dd>
+      </div>
+      <div>
+        <dt><span class="ru">Псевдотерминал (PTY)</span><span class="en">Pseudo-terminal (PTY)</span></dt>
+        <dd>
+          <span class="ru">Файл порта без железа; socat соединяет два таких конца.</span
+          ><span class="en">A port device with no hardware behind it; socat joins two ends.</span>
+        </dd>
+      </div>
+      <div>
+        <dt><span class="ru">Частота выборки</span><span class="en">Sample rate</span></dt>
+        <dd>
+          <span class="ru"
+            >Как часто анализатор меряет линию; нужно хотя бы в 4–10 раз чаще скорости сигнала.</span
+          ><span class="en">How often the analyzer reads the line; at least 4–10 times the signal rate.</span>
+        </dd>
+      </div>
+      <div>
+        <dt>CRC-16/MODBUS</dt>
+        <dd>
+          <span class="ru"
+            >Контрольная сумма кадра; на провод идёт младшим байтом вперёд: <code>C4 0B</code>.</span
+          ><span class="en">Frame checksum; sent low byte first: <code>C4 0B</code>.</span>
+        </dd>
+      </div>
+      <div>
+        <dt>Broadcast</dt>
+        <dd>
+          <span class="ru">Кадр на адрес 0: выполняют все, не отвечает никто.</span
+          ><span class="en">A frame to address 0: everyone executes it, nobody answers.</span>
+        </dd>
+      </div>
+      <div>
+        <dt>HIL</dt>
+        <dd>
+          <span class="ru">Hardware-in-the-loop: те же тесты на настоящем железе.</span
+          ><span class="en">Hardware-in-the-loop: the same tests on real hardware.</span>
+        </dd>
+      </div>
+      <div>
+        <dt><span class="ru">Эквивалентный мутант</span><span class="en">Equivalent mutant</span></dt>
+        <dd>
+          <span class="ru"
+            >Изменение кода, которое не меняет поведение, поэтому его не поймает ни один тест.</span
+          ><span class="en">A code change that does not change behaviour, so no test can catch it.</span>
+        </dd>
+      </div>
+    </dl>
+  </section>
+
+  <footer class="foot">
+    <span
+      ><span class="ru">Репозиторий:</span><span class="en">Repository:</span>
+      <a href="https://github.com/NailKarimov/qa-project-template">qa-project-template</a> ·
+      <code>python/</code>, <code>bench/uart-echo/</code> · <span class="ru">текст:</span
+      ><span class="en">text:</span>
+      <a href="https://github.com/NailKarimov/qa-project-template/blob/main/docs/protocol-starter.md"
+        >docs/protocol-starter.md</a
+      ></span
+    >
+    <span
+      ><span class="ru">Источники:</span><span class="en">Sources:</span>
+      <a href="https://modbus.org/specs.php">Modbus over Serial Line V1.02</a> ·
+      <a href="https://sigrok.org/wiki/Fx2lafw">sigrok fx2lafw</a> ·
+      <a href="http://www.dest-unreach.org/socat/doc/socat.html">socat</a> ·
+      <a href="https://learn.microsoft.com/windows/wsl/connect-usb">USB in WSL</a></span
+    >
+  </footer>
+</div>
+
+<script>
+  const DEFAULT_LANG = 'ru';
+  const root = document.documentElement;
+  function setLang(l) {
+    root.dataset.lang = l;
+    root.lang = l;
+    document.getElementById('lang-ru').setAttribute('aria-pressed', l === 'ru');
+    document.getElementById('lang-en').setAttribute('aria-pressed', l === 'en');
+    try {
+      localStorage.setItem('lang', l);
+    } catch (e) {}
+  }
+  let saved = null;
+  try {
+    saved = localStorage.getItem('lang');
+  } catch (e) {}
+  setLang(saved === 'ru' || saved === 'en' ? saved : DEFAULT_LANG);
+  document.getElementById('lang-ru').onclick = () => setLang('ru');
+  document.getElementById('lang-en').onclick = () => setLang('en');
+
+  // Waveform: idle, start, 8 data bits LSB first, stop, idle
+  const NS = 'http://www.w3.org/2000/svg';
+  const svg = document.getElementById('trace');
+  function el(name, attrs, text) {
+    const e = document.createElementNS(NS, name);
+    for (const k in attrs) e.setAttribute(k, attrs[k]);
+    if (text != null) e.textContent = text;
+    svg.appendChild(e);
+    return e;
+  }
+  function draw(byte) {
+    svg.textContent = '';
+    const x0 = 48,
+      w = 52,
+      hi = 34,
+      lo = 74;
+    const bits = [1, 0];
+    for (let i = 0; i < 8; i++) bits.push((byte >> i) & 1);
+    bits.push(1, 1);
+    const labels = ['idle', 'S', 'b0', 'b1', 'b2', 'b3', 'b4', 'b5', 'b6', 'b7', 'P', 'idle'];
+    el('text', { x: 4, y: 58, class: 'ch1' }, 'RX');
+    for (let i = 0; i <= bits.length; i++)
+      el('line', { x1: x0 + i * w, y1: 20, x2: x0 + i * w, y2: 88, class: 'grid' });
+    let d = '';
+    bits.forEach((b, i) => {
+      const y = b ? hi : lo,
+        x = x0 + i * w;
+      d += (i === 0 ? `M${x},${y}` : `L${x},${y}`) + ` L${x + w},${y} `;
+    });
+    el('path', { d, class: 'tr1' });
+    bits.forEach((b, i) => {
+      el('text', { x: x0 + i * w + w / 2, y: 104, 'text-anchor': 'middle' }, labels[i]);
+      if (i > 0 && i < 11) el('text', { x: x0 + i * w + w / 2, y: 16, 'text-anchor': 'middle' }, String(b));
+    });
+    const hex = '0x' + byte.toString(16).toUpperCase().padStart(2, '0');
+    const ch = byte >= 32 && byte < 127 ? ` '${String.fromCharCode(byte)}'` : '';
+    el('rect', { x: x0 + w + 2, y: 116, width: 10 * w - 4, height: 24, rx: 4, class: 'dec' });
+    el('text', { x: x0 + 6 * w, y: 132, 'text-anchor': 'middle', class: 'dect' }, hex + ch);
+    document.getElementById('bytelabel').textContent = hex + ch;
+  }
+  document.querySelectorAll('[data-byte]').forEach((b) => {
+    b.addEventListener('click', () => {
+      document.querySelectorAll('[data-byte]').forEach((x) => x.setAttribute('aria-pressed', x === b));
+      draw(Number(b.dataset.byte));
+    });
+  });
+  draw(0x55);
+</script>
