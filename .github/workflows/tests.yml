@@ -81,7 +81,7 @@ jobs:
         if: always()
         run: |
           for f in docs/*.html; do
-            sed 's/const DEFAULT_LANG = "ru"/const DEFAULT_LANG = "en"/' "$f" > "allure-report/$(basename "$f")"
+            sed -E "s/const DEFAULT_LANG = ['\"]ru['\"]/const DEFAULT_LANG = 'en'/" "$f" > "allure-report/$(basename "$f")"
           done
 
       - name: Publish Allure report to GitHub Pages
