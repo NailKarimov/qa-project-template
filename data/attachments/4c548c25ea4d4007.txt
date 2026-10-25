@@ -1,0 +1,18 @@
+POST https://jsonplaceholder.typicode.com/posts
+
+Request body:
+{
+  "userId": 3,
+  "title": "Vergo assentator bellum ter carbo a versus desino.",
+  "body": "Tersus summa tenetur coaegresco vilicus. Virga color abscido supplanto deludo valens currus. Summisse vir cornu tubineus."
+}
+
+Status: 201
+
+Response body:
+{
+  "userId": 3,
+  "title": "Vergo assentator bellum ter carbo a versus desino.",
+  "body": "Tersus summa tenetur coaegresco vilicus. Virga color abscido supplanto deludo valens currus. Summisse vir cornu tubineus.",
+  "id": 101
+}
