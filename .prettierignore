@@ -4,3 +4,10 @@ test-results
 playwright-report
 allure-results
 allure-report
+python/.venv
+python/.hypothesis
+python/.pytest_cache
+python/.mypy_cache
+python/.ruff_cache
+python/*.egg-info
+python/src/*.egg-info

@@ -77,6 +77,13 @@ jobs:
         if: always()
         run: npm run allure:generate
 
+      - name: Add the visual guides
+        if: always()
+        run: |
+          for f in docs/*.html; do
+            sed 's/const DEFAULT_LANG = "ru"/const DEFAULT_LANG = "en"/' "$f" > "allure-report/$(basename "$f")"
+          done
+
       - name: Publish Allure report to GitHub Pages
         if: always() && github.ref == 'refs/heads/main'
         uses: peaceiris/actions-gh-pages@v4

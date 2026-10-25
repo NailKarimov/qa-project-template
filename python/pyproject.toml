@@ -1,0 +1,53 @@
+[project]
+name = "bus-lab"
+version = "0.1.0"
+description = "Python + pytest template for protocol and device testing"
+requires-python = ">=3.12"
+dependencies = ["pyserial>=3.5"]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.3",
+  "pytest-timeout>=2.3",
+  "hypothesis>=6.112",
+  "allure-pytest>=2.13",
+  "ruff>=0.7",
+  "mypy>=1.13",
+]
+
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src", "tests"]
+addopts = "-ra --strict-markers --timeout=60"
+markers = [
+  "smoke: the critical path, run first",
+  "simulator: reads simulator internals, skipped on a real device",
+  "hardware: needs the bench (HIL=1 and a real BUS_URL)",
+]
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "PT", "SIM"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["bus_lab", "conftest"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+mypy_path = ["src", "tests"]
+explicit_package_bases = true
+
+[[tool.mypy.overrides]]
+module = ["serial", "serial.*"]
+ignore_missing_imports = true

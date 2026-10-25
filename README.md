@@ -25,6 +25,17 @@ Click **Use this template** to start a new project with everything below already
 The example tests run against public demo targets: [Sauce Demo](https://www.saucedemo.com) for UI and
 [JSONPlaceholder](https://jsonplaceholder.typicode.com) for API. Replace them with your system under test.
 
+## Python starter for protocol and device testing
+
+[`python/`](python/) is a second starter: **Python 3.12 + pytest**, Hypothesis, pyserial, Allure, ruff and mypy.
+One suite runs unchanged on three links, chosen by `BUS_URL`: in memory, over two virtual serial ports made by
+socat, and on a real board. The example is a small echo device with CRC-16/MODBUS frames; its ESP32 firmware twin
+is in [`bench/uart-echo/`](bench/uart-echo/). 30 tests, 8/8 planted bugs caught on both virtual links.
+
+To use it, copy the contents of `python/` to the root of a new repository. Guide:
+[`docs/protocol-starter.md`](docs/protocol-starter.md) ·
+[interactive](https://nailkarimov.github.io/qa-project-template/protocol-starter.html).
+
 ## Getting started
 
 Requirements: Node.js 22+, Java 17+ (for the Allure CLI).
