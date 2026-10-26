@@ -1,0 +1,889 @@
+<title>GitHub QA Showcase</title>
+<meta name="claude:viewport-fit-sides" content="cover" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+/>
+<style>
+  /* Layout: one reading column with a flow strip on top; feature sections as rows of text + specimen. */
+  :root {
+    --bg: #f5f6f8;
+    --surface: #ffffff;
+    --ink: #18202c;
+    --muted: #5a6474;
+    --line: #dde1e8;
+    --accent: #0b6e78;
+    --accent-soft: #e2f1f2;
+    --crit: #b4232a;
+    --major: #c4561a;
+    --minor: #9a7a00;
+    --trivial: #3d7a4a;
+    --open: #1f7a3a;
+    --closed: #7246b8;
+    --display: 'Bricolage Grotesque', 'Segoe UI', system-ui, sans-serif;
+    --body: 'IBM Plex Sans', 'Segoe UI', system-ui, sans-serif;
+    --mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) {
+      --bg: #11161e;
+      --surface: #18202b;
+      --ink: #e6eaf0;
+      --muted: #98a3b3;
+      --line: #2a3442;
+      --accent: #5cc3cc;
+      --accent-soft: #163236;
+      --crit: #f0737a;
+      --major: #f0995e;
+      --minor: #e2c45a;
+      --trivial: #7cc58c;
+      --open: #5fcf7e;
+      --closed: #b394f0;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme='dark'] {
+    --bg: #11161e;
+    --surface: #18202b;
+    --ink: #e6eaf0;
+    --muted: #98a3b3;
+    --line: #2a3442;
+    --accent: #5cc3cc;
+    --accent-soft: #163236;
+    --crit: #f0737a;
+    --major: #f0995e;
+    --minor: #e2c45a;
+    --trivial: #7cc58c;
+    --open: #5fcf7e;
+    --closed: #b394f0;
+    color-scheme: dark;
+  }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font: 16px/1.6 var(--body);
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 40px 64px;
+  }
+  .wrap {
+    max-width: 980px;
+    margin: 0 auto;
+    display: grid;
+    gap: 48px;
+  }
+  h1,
+  h2 {
+    font-family: var(--display);
+    text-wrap: balance;
+    line-height: 1.15;
+    margin: 0;
+  }
+  h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+  }
+  h2 {
+    font-size: 1.6rem;
+  }
+  h3 {
+    font-size: 1rem;
+    margin: 0;
+  }
+  p {
+    margin: 0;
+    max-width: 66ch;
+  }
+  code,
+  .mono {
+    font-family: var(--mono);
+    font-size: 0.88em;
+  }
+  a {
+    color: var(--accent);
+  }
+  a:focus-visible,
+  button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .eyebrow {
+    font: 500 0.78rem var(--mono);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  header {
+    display: grid;
+    gap: 14px;
+  }
+  .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .lang {
+    display: inline-flex;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .lang button {
+    font: 500 0.85rem var(--mono);
+    padding: 6px 12px;
+    border: 0;
+    background: var(--surface);
+    color: var(--muted);
+    cursor: pointer;
+  }
+  .lang button[aria-pressed='true'] {
+    background: var(--accent);
+    color: var(--bg);
+  }
+  html[lang='ru'] .en,
+  html[lang='en'] .ru {
+    display: none !important;
+  }
+  section {
+    display: grid;
+    gap: 18px;
+  }
+  /* flow strip */
+  .flow {
+    overflow-x: auto;
+  }
+  .flow ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(150px, 1fr));
+    gap: 0;
+    min-width: 760px;
+  }
+  .flow li {
+    position: relative;
+    padding: 16px 18px 16px 16px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-left: 0;
+    display: grid;
+    gap: 6px;
+    align-content: start;
+  }
+  .flow li:first-child {
+    border-left: 1px solid var(--line);
+    border-radius: 8px 0 0 8px;
+  }
+  .flow li:last-child {
+    border-radius: 0 8px 8px 0;
+  }
+  .flow li:not(:last-child)::after {
+    content: '→';
+    position: absolute;
+    right: -9px;
+    top: 14px;
+    color: var(--accent);
+    background: var(--bg);
+    font-weight: 600;
+    z-index: 1;
+  }
+  .flow .where {
+    font: 0.78rem var(--mono);
+    color: var(--muted);
+  }
+  .flow b {
+    font-family: var(--display);
+    font-size: 1.05rem;
+  }
+  /* feature rows */
+  .row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 28px;
+    align-items: start;
+  }
+  @media (max-width: 760px) {
+    .row {
+      grid-template-columns: 1fr;
+    }
+  }
+  .row .text {
+    display: grid;
+    gap: 12px;
+    min-width: 0;
+  }
+  .row ul {
+    margin: 0;
+    padding-left: 20px;
+    display: grid;
+    gap: 6px;
+  }
+  .specimen {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 18px;
+    display: grid;
+    gap: 12px;
+    min-width: 0;
+    overflow-x: auto;
+  }
+  .issue-title {
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+    flex-wrap: wrap;
+    font-weight: 600;
+  }
+  .state {
+    font: 500 0.75rem var(--mono);
+    padding: 2px 8px;
+    border-radius: 99px;
+    color: var(--surface);
+  }
+  .state.open {
+    background: var(--open);
+  }
+  .state.closed {
+    background: var(--closed);
+  }
+  .labels {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .label {
+    font: 500 0.75rem var(--mono);
+    padding: 2px 8px;
+    border-radius: 99px;
+    border: 1px solid currentColor;
+  }
+  .l-crit {
+    color: var(--crit);
+  }
+  .l-major {
+    color: var(--major);
+  }
+  .l-minor {
+    color: var(--minor);
+  }
+  .l-trivial {
+    color: var(--trivial);
+  }
+  .l-area {
+    color: var(--accent);
+  }
+  .specimen dl {
+    margin: 0;
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 6px 14px;
+    font-size: 0.9rem;
+  }
+  .specimen dt {
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    padding-top: 2px;
+  }
+  .specimen dd {
+    margin: 0;
+    min-width: 0;
+  }
+  pre {
+    margin: 0;
+    font: 0.82rem/1.55 var(--mono);
+    white-space: pre;
+  }
+  /* severity scale */
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 0.92rem;
+  }
+  .tbl {
+    overflow-x: auto;
+  }
+  th,
+  td {
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  th {
+    font: 500 0.75rem var(--mono);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  td.sev {
+    white-space: nowrap;
+    font-weight: 600;
+  }
+  .bar {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    margin-right: 8px;
+    vertical-align: 0;
+  }
+  /* board */
+  .board {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+  }
+  @media (max-width: 520px) {
+    .board {
+      grid-template-columns: 1fr;
+    }
+  }
+  .col {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 10px;
+    display: grid;
+    gap: 8px;
+    align-content: start;
+  }
+  .col h4 {
+    margin: 0;
+    font: 500 0.78rem var(--mono);
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 8px;
+    font-size: 0.8rem;
+    line-height: 1.35;
+  }
+  .card .mono {
+    color: var(--muted);
+    display: block;
+    font-size: 0.72rem;
+  }
+  .numbers {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 28px;
+    font-variant-numeric: tabular-nums;
+  }
+  .numbers div {
+    display: grid;
+  }
+  .numbers b {
+    font: 700 2rem var(--display);
+    color: var(--accent);
+  }
+  .numbers span {
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+  .glossary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 14px 28px;
+  }
+  .glossary div {
+    display: grid;
+    gap: 2px;
+    border-top: 1px solid var(--line);
+    padding-top: 10px;
+  }
+  .glossary b {
+    font-family: var(--mono);
+    font-size: 0.88rem;
+  }
+  footer {
+    color: var(--muted);
+    font-size: 0.88rem;
+    display: grid;
+    gap: 6px;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .lang button {
+      transition: background 0.15s;
+    }
+  }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="top">
+      <span class="eyebrow">qa-project-template · docs/github-showcase</span>
+      <div class="lang" role="group" aria-label="Language">
+        <button id="btn-ru" type="button" data-l="ru">RU</button>
+        <button id="btn-en" type="button" data-l="en">EN</button>
+      </div>
+    </div>
+    <h1><span class="ru">GitHub как витрина QA</span><span class="en">GitHub as a QA showcase</span></h1>
+    <p class="ru">
+      Рецензент открывает репозиторий на минуту. README показывает тесты, а вкладки и правая колонка
+      показывают, похоже ли это на настоящий процесс QA: заведены ли баги, выпущена ли версия, можно ли
+      запустить тесты без установки. Ниже пять возможностей GitHub, которые это показывают, и как они устроены
+      в портфолио.
+    </p>
+    <p class="en">
+      A reviewer opens a repository for a minute. The README shows the tests; the tabs and the sidebar show
+      whether the work looks like a real QA process: are defects reported, is there a release, can the suite
+      run without a local setup. Below are five GitHub features that answer that, and how the portfolio uses
+      them.
+    </p>
+    <div class="numbers" aria-label="Portfolio numbers">
+      <div>
+        <b>83</b><span class="ru">баг-репорта в Issues</span><span class="en">bug reports in Issues</span>
+      </div>
+      <div><b>14</b><span class="ru">релизов v1.0.0</span><span class="en">v1.0.0 releases</span></div>
+      <div>
+        <b>13</b><span class="ru">репозиториев с Codespaces</span
+        ><span class="en">repositories with Codespaces</span>
+      </div>
+      <div>
+        <b>1</b><span class="ru">публичная доска дефектов</span><span class="en">public defect board</span>
+      </div>
+    </div>
+  </header>
+
+  <section aria-labelledby="flow-h">
+    <h2 id="flow-h"><span class="ru">Путь дефекта</span><span class="en">The life of a defect</span></h2>
+    <p class="ru">
+      Каждый шаг уже был в портфолио, кроме последних двух. Тест находит дефект и остаётся зелёным, пока
+      дефект есть; отчёт его фиксирует; issue превращает запись в баг-репорт; доска собирает всё вместе; релиз
+      подводит итог.
+    </p>
+    <p class="en">
+      The first steps already existed; the last ones are new. A test finds the defect and stays green while it
+      exists; the report records it; the issue turns the record into a bug report; the board gathers them; a
+      release sums up.
+    </p>
+    <div class="flow">
+      <ol>
+        <li>
+          <b><span class="ru">Тест</span><span class="en">Test</span></b
+          ><span class="where">test.fail() · knownBug()</span><span class="ru">находит и закрепляет</span
+          ><span class="en">finds and pins it</span>
+        </li>
+        <li>
+          <b><span class="ru">Отчёт</span><span class="en">Report</span></b
+          ><span class="where">docs/test-report.md</span><span class="ru">ID, серьёзность, статус</span
+          ><span class="en">id, severity, status</span>
+        </li>
+        <li>
+          <b>Issue</b><span class="where">[SS-13] …</span><span class="ru">шаги, ожидание, факт</span
+          ><span class="en">steps, expected, actual</span>
+        </li>
+        <li>
+          <b><span class="ru">Доска</span><span class="en">Board</span></b
+          ><span class="where">Projects · QA defects</span><span class="ru">все репозитории вместе</span
+          ><span class="en">all repositories together</span>
+        </li>
+        <li>
+          <b><span class="ru">Релиз</span><span class="en">Release</span></b
+          ><span class="where">.github/releases/v1.0.0.md</span><span class="ru">итоги версии</span
+          ><span class="en">what the version covers</span>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section aria-labelledby="issues-h">
+    <h2 id="issues-h">
+      <span class="ru">Issues как баг-трекер</span><span class="en">Issues as a bug tracker</span>
+    </h2>
+    <div class="row">
+      <div class="text">
+        <p class="ru">
+          Каждый найденный дефект — отдельный issue в репозитории, где его нашли. Заголовок начинается с ID из
+          отчёта, тело построено как баг-репорт, метки задают серьёзность и область.
+        </p>
+        <p class="en">
+          Every defect is an issue in the repository that found it. The title starts with the id from the
+          report, the body is a bug report, labels give severity and area.
+        </p>
+        <ul class="ru">
+          <li>
+            Форма <code>.github/ISSUE_TEMPLATE/bug_report.yml</code> спрашивает те же поля, что у
+            сгенерированных issues.
+          </li>
+          <li>Ссылка ведёт на строку теста, который закрепляет дефект.</li>
+          <li>
+            Исправленный поставщиком дефект закрыт как completed (BUG-003), проблема песочницы — как not
+            planned (DEF-3…5).
+          </li>
+        </ul>
+        <ul class="en">
+          <li>
+            The form <code>.github/ISSUE_TEMPLATE/bug_report.yml</code> asks for the same fields as the
+            generated issues.
+          </li>
+          <li>A link points at the line of the test that pins the defect.</li>
+          <li>
+            A defect fixed by the vendor is closed as completed (BUG-003); a sandbox problem as not planned
+            (DEF-3…5).
+          </li>
+        </ul>
+      </div>
+      <div class="specimen" aria-label="Example issue">
+        <div class="issue-title">
+          <span class="state open">Open</span
+          ><span>[SS-13] BOLA: anyone can read another customer's card and address</span>
+        </div>
+        <div class="labels">
+          <span class="label l-area">bug</span><span class="label l-crit">severity: critical</span
+          ><span class="label l-area">area: security</span>
+        </div>
+        <dl>
+          <dt>Environment</dt>
+          <dd>Sock Shop in Docker Compose</dd>
+          <dt>Steps</dt>
+          <dd>Without logging in, <code>GET /customers/{id}/cards</code> for a known id</dd>
+          <dt>Expected</dt>
+          <dd>Only the owner's session can read them (OWASP API1)</dd>
+          <dt>Actual</dt>
+          <dd>Full card number, CCV and address, no login</dd>
+          <dt>Test</dt>
+          <dd><code>tests/sockshop/security-owasp.spec.ts#L13</code></dd>
+        </dl>
+      </div>
+    </div>
+    <div class="tbl">
+      <table>
+        <thead>
+          <tr>
+            <th><span class="ru">Серьёзность</span><span class="en">Severity</span></th>
+            <th><span class="ru">Значение</span><span class="en">Meaning</span></th>
+            <th><span class="ru">Пример</span><span class="en">Example</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="sev"><span class="bar" style="background: var(--crit)"></span>critical</td>
+            <td>
+              <span class="ru">безопасность, потеря данных или блок основного сценария</span
+              ><span class="en">security, data loss, or a core flow blocked</span>
+            </td>
+            <td>
+              SS-4 · <span class="ru">API отдаёт номер карты и CCV</span
+              ><span class="en">API returns card number and CCV</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="sev"><span class="bar" style="background: var(--major)"></span>major</td>
+            <td>
+              <span class="ru">функция неверна или недоступна группе пользователей</span
+              ><span class="en">a feature is wrong or unusable for a group of users</span>
+            </td>
+            <td>
+              BUG-002 · <span class="ru">меню недоступно с клавиатуры</span
+              ><span class="en">menu unreachable by keyboard</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="sev"><span class="bar" style="background: var(--minor)"></span>minor</td>
+            <td>
+              <span class="ru">неверно, но есть обход</span><span class="en">wrong, with a workaround</span>
+            </td>
+            <td>UI-TXT-1 · <code>Riga, , LV1050</code></td>
+          </tr>
+          <tr>
+            <td class="sev"><span class="bar" style="background: var(--trivial)"></span>trivial</td>
+            <td>
+              <span class="ru">косметика и формулировки</span><span class="en">cosmetic or wording</span>
+            </td>
+            <td>UI-TXT-2 · "1 Days"</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="ru">
+      Серьёзность — про влияние на пользователя, приоритет — про очерёдность исправления. Форма спрашивает
+      оба.
+    </p>
+    <p class="en">
+      Severity measures impact on users; priority measures the order of fixing. The form asks for both.
+    </p>
+  </section>
+
+  <section aria-labelledby="board-h">
+    <h2 id="board-h"><span class="ru">Доска дефектов</span><span class="en">Defect board</span></h2>
+    <div class="row">
+      <div class="text">
+        <p class="ru">
+          Публичный проект <a href="https://github.com/users/NailKarimov/projects/2">QA defects</a> создан из
+          шаблона Bug tracker и заполнен поиском <code>is:issue user:NailKarimov label:bug</code>. Открытые
+          дефекты в «To triage», закрытые в «Done».
+        </p>
+        <p class="en">
+          The public project <a href="https://github.com/users/NailKarimov/projects/2">QA defects</a> was made
+          from the Bug tracker template and filled with the search
+          <code>is:issue user:NailKarimov label:bug</code>. Open defects are in To triage, closed ones in
+          Done.
+        </p>
+        <p class="ru">
+          Новый issue попадает на доску из его правой колонки (Projects). Сам отчёт
+          <code>docs/test-report.md</code> остаётся источником правды.
+        </p>
+        <p class="en">
+          A new issue joins the board from its sidebar (Projects). The test report
+          <code>docs/test-report.md</code> stays the source of truth.
+        </p>
+      </div>
+      <div class="specimen" aria-label="Board columns">
+        <div class="board">
+          <div class="col">
+            <h4>To triage <span>72</span></h4>
+            <div class="card">
+              <span class="mono">ui-e2e-testing #1</span>[UI-SEC-1] DOM XSS through the search term
+            </div>
+            <div class="card">
+              <span class="mono">3sMoneyTests #11</span>[BUG-011] Contact page title is 94 characters long
+            </div>
+          </div>
+          <div class="col">
+            <h4>In progress <span>0</span></h4>
+          </div>
+          <div class="col">
+            <h4>Done <span>11</span></h4>
+            <div class="card">
+              <span class="mono">3sMoneyTests #5</span>[BUG-003] Unrendered placeholder in href
+            </div>
+            <div class="card">
+              <span class="mono">python-testing #5</span>Shared SQLite connection under load
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="rel-h">
+    <h2 id="rel-h">
+      <span class="ru">Релизы файлом с описанием</span><span class="en">Releases from a notes file</span>
+    </h2>
+    <div class="row">
+      <div class="text">
+        <p class="ru">
+          Релиз выпускается коммитом файла с описанием. Workflow <code>Release</code> видит новый файл в
+          <code>.github/releases/</code>, создаёт тег на этом коммите и релиз с файлом в качестве описания.
+          Уже выпущенные версии пропускаются, поэтому перезапуск безопасен.
+        </p>
+        <p class="en">
+          A release is published by committing its notes. The <code>Release</code> workflow sees a new file in
+          <code>.github/releases/</code>, creates the tag on that commit and the release with the file as its
+          notes. Released versions are skipped, so a re-run is safe.
+        </p>
+        <p class="ru">
+          Описание проходит ревью как код, а личный токен не нужен: хватает <code>GITHUB_TOKEN</code> с
+          <code>contents: write</code>.
+        </p>
+        <p class="en">
+          Notes are reviewed like code, and no personal token is needed: <code>GITHUB_TOKEN</code> with
+          <code>contents: write</code> is enough.
+        </p>
+      </div>
+      <div class="specimen" aria-label="Release steps">
+        <pre><span class="mono" style="color:var(--muted)"># 1. write the notes</span>
+.github/releases/v1.1.0.md
+
+<span class="mono" style="color:var(--muted)"># 2. push to main → workflow runs</span>
+gh release create v1.1.0 \
+  --target "$GITHUB_SHA" \
+  --notes-file .github/releases/v1.1.0.md \
+  --latest
+
+<span class="mono" style="color:var(--muted)"># 3. sidebar: Releases · v1.1.0 Latest</span></pre>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="cs-h">
+    <h2 id="cs-h">
+      <span class="ru">Codespaces и карточки ссылок</span><span class="en">Codespaces and link cards</span>
+    </h2>
+    <div class="row">
+      <div class="text">
+        <h3><span class="ru">Open in Codespaces</span><span class="en">Open in Codespaces</span></h3>
+        <p class="ru">
+          Файл <code>.devcontainer/devcontainer.json</code> берёт образ <code>universal</code> (Node, Python,
+          Java, .NET, Go) с Docker внутри и один раз ставит зависимости. Кнопка в README открывает VS Code в
+          браузере, и тесты запускаются первой командой из раздела Running it. В android-testing этого нет:
+          эмулятору нужно аппаратное ускорение.
+        </p>
+        <p class="en">
+          <code>.devcontainer/devcontainer.json</code> uses the <code>universal</code> image (Node, Python,
+          Java, .NET, Go) with Docker inside and installs the dependencies once. The README badge opens VS
+          Code in the browser, and the first command from Running it works. android-testing has none: the
+          emulator needs hardware acceleration.
+        </p>
+      </div>
+      <div class="text">
+        <h3>Social preview</h3>
+        <p class="ru">
+          Картинка 1280×640, которую GitHub показывает при вставке ссылки в LinkedIn или Slack. Карточки
+          собраны из тех же цифр, что в README: тесты, дефекты, доля пойманных мутантов. При изменении цифр их
+          нужно перегенерировать и загрузить в Settings → General.
+        </p>
+        <p class="en">
+          A 1280×640 image GitHub shows when a link is pasted into LinkedIn or Slack. The cards use the README
+          numbers: tests, defects, mutation score. When the numbers change, regenerate them and upload in
+          Settings → General.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="alt-h">
+    <h2 id="alt-h">
+      <span class="ru">Чем это отличается от рабочих инструментов</span
+      ><span class="en">Compared with work tools</span>
+    </h2>
+    <div class="tbl">
+      <table>
+        <thead>
+          <tr>
+            <th><span class="ru">Задача</span><span class="en">Job</span></th>
+            <th>GitHub</th>
+            <th><span class="ru">В компании обычно</span><span class="en">At a company, usually</span></th>
+            <th><span class="ru">Почему здесь GitHub</span><span class="en">Why GitHub here</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="ru">Баг-трекинг</span><span class="en">Bug tracking</span></td>
+            <td>Issues + Projects</td>
+            <td>Jira</td>
+            <td>
+              <span class="ru">публично, рядом с тестом, без учётной записи</span
+              ><span class="en">public, next to the test, no account needed</span>
+            </td>
+          </tr>
+          <tr>
+            <td><span class="ru">Тест-кейсы и прогоны</span><span class="en">Test cases and runs</span></td>
+            <td>Allure + docs/test-report.md</td>
+            <td>TestRail, Zephyr, Xray</td>
+            <td>
+              <span class="ru">история прогонов публикуется из CI</span
+              ><span class="en">run history is published from CI</span>
+            </td>
+          </tr>
+          <tr>
+            <td><span class="ru">Выпуск версии</span><span class="en">Release</span></td>
+            <td>Release workflow</td>
+            <td>
+              <span class="ru">release-ветки, Jenkins, Azure Pipelines</span
+              ><span class="en">release branches, Jenkins, Azure Pipelines</span>
+            </td>
+            <td>
+              <span class="ru">описание в git, один файл на версию</span
+              ><span class="en">notes in git, one file per version</span>
+            </td>
+          </tr>
+          <tr>
+            <td><span class="ru">Окружение разработчика</span><span class="en">Dev environment</span></td>
+            <td>Codespaces</td>
+            <td>
+              <span class="ru">VDI, локальная установка по вики</span
+              ><span class="en">VDI, local setup from a wiki</span>
+            </td>
+            <td>
+              <span class="ru">рецензент запускает тесты сам</span
+              ><span class="en">a reviewer runs the tests</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section aria-labelledby="gl-h">
+    <h2 id="gl-h"><span class="ru">Глоссарий</span><span class="en">Glossary</span></h2>
+    <div class="glossary">
+      <div>
+        <b>Issue form</b><span class="ru">шаблон issue в YAML с полями и обязательными ответами</span
+        ><span class="en">a YAML issue template with fields and required answers</span>
+      </div>
+      <div>
+        <b>Severity / Priority</b><span class="ru">влияние дефекта / очерёдность исправления</span
+        ><span class="en">impact of the defect / order of fixing</span>
+      </div>
+      <div>
+        <b>state_reason</b><span class="ru">причина закрытия issue: completed или not planned</span
+        ><span class="en">why an issue was closed: completed or not planned</span>
+      </div>
+      <div>
+        <b>Projects (v2)</b><span class="ru">доска и таблица поверх issues из любых репозиториев</span
+        ><span class="en">a board and table over issues from any repository</span>
+      </div>
+      <div>
+        <b>GITHUB_TOKEN</b><span class="ru">токен, который Actions выдаёт каждому прогону</span
+        ><span class="en">the token Actions issues to every run</span>
+      </div>
+      <div>
+        <b>Dev container</b><span class="ru">описание окружения: образ, расширения, команда установки</span
+        ><span class="en">an environment description: image, features, install command</span>
+      </div>
+      <div>
+        <b>Social preview</b><span class="ru">Open Graph-картинка репозитория</span
+        ><span class="en">the repository's Open Graph image</span>
+      </div>
+      <div>
+        <b>Pinned defect</b><span class="ru">дефект с тестом, который краснеет после исправления</span
+        ><span class="en">a defect with a test that turns red when it is fixed</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span class="ru"
+      >Ограничения: issues повторяют отчёт, поэтому при изменении дефекта обновляются оба. Конфигурация
+      Codespaces ещё не запускалась, первый запуск и есть её проверка. Карточки и настройки доски хранятся в
+      GitHub, а не в репозитории.</span
+    >
+    <span class="en"
+      >Limits: issues repeat the report, so both change together. The Codespaces setup has not been started
+      yet; its first launch is the test. Cards and board settings live in GitHub, not in the repository.</span
+    >
+    <span
+      >Text guide:
+      <a href="https://github.com/NailKarimov/qa-project-template/blob/main/docs/github-showcase.md"
+        >docs/github-showcase.md</a
+      >
+      · Portfolio: <a href="https://github.com/NailKarimov">github.com/NailKarimov</a></span
+    >
+  </footer>
+</div>
+
+<script>
+  (function () {
+    var root = document.documentElement;
+    function set(l) {
+      root.lang = l;
+      document.querySelectorAll('.lang button').forEach(function (b) {
+        b.setAttribute('aria-pressed', String(b.dataset.l === l));
+      });
+      try {
+        localStorage.setItem('lang', l);
+      } catch (e) {}
+    }
+    var saved = null;
+    try {
+      saved = localStorage.getItem('lang');
+    } catch (e) {}
+    set(saved || (location.hostname.endsWith('github.io') ? 'en' : 'ru'));
+    document.querySelectorAll('.lang button').forEach(function (b) {
+      b.addEventListener('click', function () {
+        set(b.dataset.l);
+      });
+    });
+  })();
+</script>

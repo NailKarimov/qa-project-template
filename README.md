@@ -11,6 +11,7 @@
 | ------------------------------------------------------------------------------------------------- | --------------------------- |
 | **[Allure test report](https://nailkarimov.github.io/qa-project-template/)**                      | example run of the template |
 | [Protocol bench starter](https://nailkarimov.github.io/qa-project-template/protocol-starter.html) | interactive guide           |
+| [GitHub as a QA showcase](https://nailkarimov.github.io/qa-project-template/github-showcase.html) | interactive guide           |
 
 Click these links: opening an `.html` file in the file list shows its source code, GitHub does not run it.
 
@@ -21,17 +22,17 @@ Click **Use this template** to start a new project with everything below already
 
 ## What is inside
 
-| Area          | Files                                              | Details                                                                                       |
-| ------------- | -------------------------------------------------- | --------------------------------------------------------------------------------------------- |
-| Page objects  | `src/pages`                                        | `BasePage` plus one class per page; locators use `data-test` attributes                       |
-| API clients   | `src/api`                                          | `ApiClient` attaches every request and response to the report; one client per resource        |
-| Test data     | `src/data`                                         | Factories built on Faker; override fields for boundary and negative cases                     |
-| Fixtures      | `src/fixtures.ts`                                  | Tests receive ready objects: `async ({ loginPage, posts }) => …`                              |
-| Configuration | `config/env.ts`, `.env.example`                    | Every URL and credential can be overridden by an environment variable                         |
-| Tests         | `tests/ui`, `tests/api`                            | Two Playwright projects; `@smoke` tag for the critical path                                   |
-| Code quality  | `eslint.config.mjs`, `.prettierrc.json`, `.husky/` | ESLint with Playwright rules, Prettier, pre-commit checks via lint-staged                     |
-| CI            | `.github/workflows/tests.yml`                      | Runs on push, PR, nightly and on demand; lint, type check, tests; Allure to GitHub Pages      |
-| Documentation | `docs/test-plan.md`, `docs/test-report.md`         | Templates based on ISO/IEC/IEEE 29119-3; the portfolio layout in `docs/portfolio-standard.md` |
+| Area          | Files                                              | Details                                                                                                                                                     |
+| ------------- | -------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Page objects  | `src/pages`                                        | `BasePage` plus one class per page; locators use `data-test` attributes                                                                                     |
+| API clients   | `src/api`                                          | `ApiClient` attaches every request and response to the report; one client per resource                                                                      |
+| Test data     | `src/data`                                         | Factories built on Faker; override fields for boundary and negative cases                                                                                   |
+| Fixtures      | `src/fixtures.ts`                                  | Tests receive ready objects: `async ({ loginPage, posts }) => …`                                                                                            |
+| Configuration | `config/env.ts`, `.env.example`                    | Every URL and credential can be overridden by an environment variable                                                                                       |
+| Tests         | `tests/ui`, `tests/api`                            | Two Playwright projects; `@smoke` tag for the critical path                                                                                                 |
+| Code quality  | `eslint.config.mjs`, `.prettierrc.json`, `.husky/` | ESLint with Playwright rules, Prettier, pre-commit checks via lint-staged                                                                                   |
+| CI            | `.github/workflows/tests.yml`                      | Runs on push, PR, nightly and on demand; lint, type check, tests; Allure to GitHub Pages                                                                    |
+| Documentation | `docs/test-plan.md`, `docs/test-report.md`         | Templates based on ISO/IEC/IEEE 29119-3; the portfolio layout in `docs/portfolio-standard.md`; issues, releases and Codespaces in `docs/github-showcase.md` |
 
 The example tests run against public demo targets: [Sauce Demo](https://www.saucedemo.com) for UI and
 [JSONPlaceholder](https://jsonplaceholder.typicode.com) for API. Replace them with your system under test.
