@@ -77,6 +77,26 @@ GitHub shows a 1280×640 image when a repository link is shared. The cards are g
 numbers as the README (tests, defects, mutation score) and uploaded in Settings → General → Social preview.
 Regenerate them when the numbers change.
 
+## Demo pull request
+
+[python-testing PR #6](https://github.com/NailKarimov/python-testing/pull/6) is kept open on purpose. It replaces
+`quantize(CENT, rounding=ROUND_HALF_UP)` with the built-in `round(value, 2)`: a three-line refactor that passes the
+linters and mypy, but `round()` on a `Decimal` rounds half to even. 76 of 77 tests stay green; the Hypothesis test
+that compares the service with an independent oracle fails and shrinks the case to two items at 0.01 with the
+SAVE25 coupon (discount 0.00 instead of 0.01).
+
+What the reviewer sees without reading any log:
+
+| Place         | What appears                                                                | How                                                                       |
+| ------------- | --------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| Checks tab    | red `test` job, a run summary with the verdict and the failing test         | `scripts/ci_report.py` writes Markdown to `$GITHUB_STEP_SUMMARY`          |
+| Files changed | an error annotation on the line of the failed test, with the shrunk example | `::error file=…,line=…::` workflow commands                               |
+| Conversation  | one CI comment, updated on every push: passed, failed, time, example        | `gh pr comment`, or a PATCH of the comment marked `<!-- test-summary -->` |
+
+The script reads pytest's `--junitxml` output, so the same step works for any runner that writes JUnit XML
+(Playwright, Maven Surefire, `dotnet test --logger junit`). In an interview, one link shows the whole loop:
+change, checks, evidence, the decision not to merge.
+
 ## Limits
 
 - Issues and the board repeat what `docs/test-report.md` already says. The test report stays the source of truth;
