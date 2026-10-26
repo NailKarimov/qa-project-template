@@ -1,0 +1,18 @@
+POST https://jsonplaceholder.typicode.com/posts
+
+Request body:
+{
+  "userId": 9,
+  "title": "Tenax dedico nisi.",
+  "body": "Sono vester vis subseco cena rerum vitae odio curto. Velut termes non suadeo conitor vomito quisquam terga talio amo. Civis spiritus curvo cinis adopto alioqui cunabula eius coruscus stillicidium."
+}
+
+Status: 201
+
+Response body:
+{
+  "userId": 9,
+  "title": "Tenax dedico nisi.",
+  "body": "Sono vester vis subseco cena rerum vitae odio curto. Velut termes non suadeo conitor vomito quisquam terga talio amo. Civis spiritus curvo cinis adopto alioqui cunabula eius coruscus stillicidium.",
+  "id": 101
+}
