@@ -87,11 +87,11 @@ SAVE25 coupon (discount 0.00 instead of 0.01).
 
 What the reviewer sees without reading any log:
 
-| Place         | What appears                                                                | How                                                                       |
-| ------------- | --------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
-| Checks tab    | red `test` job, a run summary with the verdict and the failing test         | `scripts/ci_report.py` writes Markdown to `$GITHUB_STEP_SUMMARY`          |
-| Files changed | an error annotation on the line of the failed test, with the shrunk example | `::error file=…,line=…::` workflow commands                               |
-| Conversation  | one CI comment, updated on every push: passed, failed, time, example        | `gh pr comment`, or a PATCH of the comment marked `<!-- test-summary -->` |
+| Place            | What appears                                                                                                                           | How                                                                       |
+| ---------------- | -------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| Checks tab       | red `test` job, a run summary with the verdict and the failing test                                                                    | `scripts/ci_report.py` writes Markdown to `$GITHUB_STEP_SUMMARY`          |
+| Checks, run page | an error annotation on the line of the failed test, with the shrunk example (shown in Files changed too when the PR touches that file) | `::error file=…,line=…::` workflow commands                               |
+| Conversation     | one CI comment, updated on every push: passed, failed, time, example                                                                   | `gh pr comment`, or a PATCH of the comment marked `<!-- test-summary -->` |
 
 The script reads pytest's `--junitxml` output, so the same step works for any runner that writes JUnit XML
 (Playwright, Maven Surefire, `dotnet test --logger junit`). In an interview, one link shows the whole loop:
