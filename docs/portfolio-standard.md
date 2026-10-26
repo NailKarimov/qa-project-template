@@ -5,17 +5,18 @@ everything in the next in seconds.
 
 ## Files
 
-| File                          | Required | What it is                                                                                                                                             |
-| ----------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `README.md`                   | yes      | Sections below, in this order                                                                                                                          |
-| `LICENSE`                     | yes      | MIT                                                                                                                                                    |
-| `.editorconfig`               | yes      | UTF-8, LF, final newline, indentation of the language                                                                                                  |
-| `docs/test-plan.md`           | yes      | Test plan, ISO/IEC/IEEE 29119-3, short                                                                                                                 |
-| `docs/test-report.md`         | yes      | Test summary report: latest results, defects, deviations, recommendations                                                                              |
-| `docs/<topic>.md`             | yes      | One text guide per tool or approach                                                                                                                    |
-| `docs/<topic>.html`           | yes      | The same guide as an interactive page, published on GitHub Pages                                                                                       |
-| `.github/workflows/tests.yml` | yes      | Push, pull request, a schedule and manual runs; publishes reports to `gh-pages`                                                                        |
-| Mutation check                | yes      | Bugs planted one at a time, every one must fail the suite: `scripts/mutants.*` where the suite is fast, otherwise a table of planted bugs in the guide |
+| File                                    | Required                | What it is                                                                                                                                             |
+| --------------------------------------- | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `README.md`                             | yes                     | Sections below, in this order                                                                                                                          |
+| `LICENSE`                               | yes                     | MIT                                                                                                                                                    |
+| `.editorconfig`                         | yes                     | UTF-8, LF, final newline, indentation of the language                                                                                                  |
+| `docs/test-plan.md`                     | yes                     | Test plan, ISO/IEC/IEEE 29119-3, short                                                                                                                 |
+| `docs/test-report.md`                   | yes                     | Test summary report: latest results, defects, deviations, recommendations                                                                              |
+| `docs/<topic>.md`                       | yes                     | One text guide per tool or approach                                                                                                                    |
+| `docs/<topic>.html`                     | yes                     | The same guide as an interactive page, published on GitHub Pages                                                                                       |
+| `.github/workflows/tests.yml`           | yes                     | Push, pull request, a schedule and manual runs; publishes reports to `gh-pages`                                                                        |
+| `.github/ISSUE_TEMPLATE/bug_report.yml` | where defects are found | Issue form for bug reports: severity, priority, environment, steps, expected and actual result, the test that pins it                                  |
+| Mutation check                          | yes                     | Bugs planted one at a time, every one must fail the suite: `scripts/mutants.*` where the suite is fast, otherwise a table of planted bugs in the guide |
 
 ## README sections
 
@@ -36,7 +37,7 @@ everything in the next in seconds.
    | Reports            | links to the reports on Pages                                |
 
 4. **What is tested:** a table with the columns Suite, Tool and What it proves.
-5. **Findings:** defects and lessons found by the tests, each with its id.
+5. **Findings:** defects and lessons found by the tests, each with its id, and a link to the bug reports in Issues.
 6. **Running it:** requirements, then one command block.
 7. **Project structure:** a short tree with one line per folder.
 8. **Design decisions** (optional): why the suite is built the way it is, when that is not obvious.
@@ -49,4 +50,6 @@ everything in the next in seconds.
 
 - English, plain sentences, numbers from the latest CI run.
 - A defect gets an id and a test (`test.fail()` or `knownDefect()`), and it is listed in `docs/test-report.md`.
+- Each defect is also an issue titled `[ID] summary`, labelled `bug`, `severity: …` and `area: …`. A defect fixed by
+  the vendor, or one that turned out to be an environment problem, is closed with the reason in a comment.
 - The docs table and the visual guides use the same names, so a link from the README never leads to 404.
