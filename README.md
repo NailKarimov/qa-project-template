@@ -3,6 +3,7 @@
 [![Tests](https://github.com/NailKarimov/qa-project-template/actions/workflows/tests.yml/badge.svg)](https://github.com/NailKarimov/qa-project-template/actions/workflows/tests.yml)
 [![Allure report](https://img.shields.io/badge/report-Allure-orange)](https://nailkarimov.github.io/qa-project-template/)
 [![Release](https://img.shields.io/github/v/release/NailKarimov/qa-project-template)](https://github.com/NailKarimov/qa-project-template/releases)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/NailKarimov/qa-project-template?quickstart=1)
 
 ### ▶ Open online
 
@@ -47,6 +48,8 @@ To use it, copy the contents of `python/` to the root of a new repository. Guide
 [interactive](https://nailkarimov.github.io/qa-project-template/protocol-starter.html).
 
 ## Getting started
+
+No local setup: the **Open in GitHub Codespaces** badge starts a browser VS Code with this repository, Node, Python, Java and Docker; the container installs the dependencies and Chromium on creation, then `npm test` works in the terminal.
 
 Requirements: Node.js 22+, Java 17+ (for the Allure CLI).
 

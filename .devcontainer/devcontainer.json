@@ -1,0 +1,13 @@
+{
+  "name": "qa-project-template",
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  },
+  "postCreateCommand": "npm ci && npx playwright install --with-deps chromium && pip install -e 'python[dev]'",
+  "customizations": {
+    "codespaces": {
+      "openFiles": ["README.md"]
+    }
+  }
+}
