@@ -742,6 +742,64 @@ gh release create v1.1.0 \
     </div>
   </section>
 
+  <section aria-labelledby="demo-h">
+    <h2 id="demo-h">
+      <span class="ru">Демо-PR: CI отклоняет изменение</span
+      ><span class="en">Demo PR: CI rejects a change</span>
+    </h2>
+    <div class="row">
+      <div class="text">
+        <p class="ru">
+          <a href="https://github.com/NailKarimov/python-testing/pull/6">PR #6 в python-testing</a> открыт
+          специально и не мержится. Он заменяет кассовое округление на встроенный <code>round()</code>: три
+          строки, линтеры и mypy довольны, но <code>round()</code> для Decimal округляет к чётному. 76 из 77
+          тестов зелёные; падает тест Hypothesis, сравнивающий сервис с независимым оракулом, и сжимает пример
+          до двух товаров по 0.01 с купоном SAVE25.
+        </p>
+        <p class="en">
+          <a href="https://github.com/NailKarimov/python-testing/pull/6">PR #6 in python-testing</a> stays
+          open on purpose. It swaps till rounding for the built-in <code>round()</code>: three lines, linters
+          and mypy pass, but <code>round()</code> on a Decimal rounds half to even. 76 of 77 tests stay green;
+          the Hypothesis test that compares the service with an independent oracle fails and shrinks the case
+          to two items at 0.01 with SAVE25.
+        </p>
+        <ul class="ru">
+          <li><b>Checks</b> — красная задача и сводка с вердиктом.</li>
+          <li><b>Files changed</b> — аннотация на строке упавшего теста.</li>
+          <li><b>Комментарий CI</b> — прошло, упало, время, пример; обновляется при каждом пуше.</li>
+        </ul>
+        <ul class="en">
+          <li><b>Checks</b>: a red job and a summary with the verdict.</li>
+          <li><b>Files changed</b>: an annotation on the line of the failed test.</li>
+          <li><b>CI comment</b>: passed, failed, time, example; updated on every push.</li>
+        </ul>
+      </div>
+      <div class="specimen" aria-label="CI comment">
+        <div class="issue-title">
+          <span class="state closed">Draft</span><span>Demo: simplify money() with round()</span>
+        </div>
+        <div class="labels">
+          <span class="label l-area">demo</span><span class="label l-crit">do not merge</span>
+        </div>
+        <pre>
+-    return value.quantize(CENT, rounding=ROUND_HALF_UP)
++    return round(value, 2)</pre>
+        <dl>
+          <dt>Verdict</dt>
+          <dd>❌ Do not merge</dd>
+          <dt>Passed</dt>
+          <dd>76 · <span class="ru">упал</span><span class="en">failed</span> 1</dd>
+          <dt>Example</dt>
+          <dd><code>[('0.01', 2)]</code>, SAVE25</dd>
+          <dt>Service</dt>
+          <dd>discount 0.00 · total 5.01</dd>
+          <dt>Oracle</dt>
+          <dd>discount 0.01 · total 5.00</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
   <section aria-labelledby="alt-h">
     <h2 id="alt-h">
       <span class="ru">Чем это отличается от рабочих инструментов</span

@@ -1,0 +1,18 @@
+POST https://jsonplaceholder.typicode.com/posts
+
+Request body:
+{
+  "userId": 5,
+  "title": "Delicate corroboro amor blandior tepesco talus.",
+  "body": "Templum deserunt cervus alter. Correptius caries volaticus porro officiis consequatur summa debilito pecco. Arcesso alienus tollo tenetur."
+}
+
+Status: 201
+
+Response body:
+{
+  "userId": 5,
+  "title": "Delicate corroboro amor blandior tepesco talus.",
+  "body": "Templum deserunt cervus alter. Correptius caries volaticus porro officiis consequatur summa debilito pecco. Arcesso alienus tollo tenetur.",
+  "id": 101
+}
