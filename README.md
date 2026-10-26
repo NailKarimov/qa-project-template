@@ -2,6 +2,7 @@
 
 [![Tests](https://github.com/NailKarimov/qa-project-template/actions/workflows/tests.yml/badge.svg)](https://github.com/NailKarimov/qa-project-template/actions/workflows/tests.yml)
 [![Allure report](https://img.shields.io/badge/report-Allure-orange)](https://nailkarimov.github.io/qa-project-template/)
+[![Release](https://img.shields.io/github/v/release/NailKarimov/qa-project-template)](https://github.com/NailKarimov/qa-project-template/releases)
 
 ### ▶ Open online
 
@@ -86,6 +87,8 @@ Every repository of the portfolio follows one layout: [`docs/portfolio-standard.
 - [ ] A text guide and an interactive guide for every tool or approach
 - [ ] Tests run with one command locally and in CI; reports published on GitHub Pages
 - [ ] A mutation check: bugs planted one at a time, and every one is caught
+- [ ] Defects found are bug reports in Issues (`.github/ISSUE_TEMPLATE/bug_report.yml`), linked from Findings
+- [ ] A release: commit `.github/releases/<tag>.md` and the Release workflow publishes the tag and the release
 - [ ] Lint, format and type checks pass; no secrets in the repository
 
 ## Conventions
