@@ -1,0 +1,18 @@
+POST https://jsonplaceholder.typicode.com/posts
+
+Request body:
+{
+  "userId": 4,
+  "title": "Volutabrum ubi correptius supplanto usque aequus.",
+  "body": "Vereor unde arbor arbitro beatae. Trado tero varietas acquiro valde amplus adeptio. Audentia cervus solio corrumpo."
+}
+
+Status: 201
+
+Response body:
+{
+  "userId": 4,
+  "title": "Volutabrum ubi correptius supplanto usque aequus.",
+  "body": "Vereor unde arbor arbitro beatae. Trado tero varietas acquiro valde amplus adeptio. Audentia cervus solio corrumpo.",
+  "id": 101
+}
