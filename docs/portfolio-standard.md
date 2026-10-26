@@ -21,6 +21,8 @@ everything in the next in seconds.
 
 1. **Title and badges:** the repository name; badges for the Tests workflow (and any other workflow) and the
    report on Pages.
+   Right under the badges, an **Open online** table: one row per page published on Pages (the report first, then
+   the other reports and the interactive guides), each a direct link.
 2. **One-paragraph summary:** what is tested, on which system, in which language.
 3. **At a glance:** a two-column table:
 

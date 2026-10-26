@@ -3,6 +3,15 @@
 [![Tests](https://github.com/NailKarimov/qa-project-template/actions/workflows/tests.yml/badge.svg)](https://github.com/NailKarimov/qa-project-template/actions/workflows/tests.yml)
 [![Allure report](https://img.shields.io/badge/report-Allure-orange)](https://nailkarimov.github.io/qa-project-template/)
 
+### ▶ Open online
+
+| Page                                                                                              | What it is                  |
+| ------------------------------------------------------------------------------------------------- | --------------------------- |
+| **[Allure test report](https://nailkarimov.github.io/qa-project-template/)**                      | example run of the template |
+| [Protocol bench starter](https://nailkarimov.github.io/qa-project-template/protocol-starter.html) | interactive guide           |
+
+Click these links: opening an `.html` file in the file list shows its source code, GitHub does not run it.
+
 Starter template for test automation projects: **Playwright + TypeScript**, UI and API tests in one suite,
 **Allure** reporting with history, **GitHub Actions** CI, and code quality checks on every commit.
 
