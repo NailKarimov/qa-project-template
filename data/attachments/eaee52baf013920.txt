@@ -1,0 +1,18 @@
+POST https://jsonplaceholder.typicode.com/posts
+
+Request body:
+{
+  "userId": 9,
+  "title": "Laudantium accusator fugiat cum volaticus tabesco.",
+  "body": "Vereor vigor ascit annus appello cumque verus correptius defleo tactus. Infit defaeco caute absum corporis aedificium tabesco. Aequitas balbus incidunt pecto sophismata."
+}
+
+Status: 201
+
+Response body:
+{
+  "userId": 9,
+  "title": "Laudantium accusator fugiat cum volaticus tabesco.",
+  "body": "Vereor vigor ascit annus appello cumque verus correptius defleo tactus. Infit defaeco caute absum corporis aedificium tabesco. Aequitas balbus incidunt pecto sophismata.",
+  "id": 101
+}
