@@ -1,0 +1,18 @@
+POST https://jsonplaceholder.typicode.com/posts
+
+Request body:
+{
+  "userId": 3,
+  "title": "Sed socius aranea alii amissio cumque stabilis sed.",
+  "body": "Spero clibanus vitae calamitas testimonium ubi harum quibusdam statim. Aperte desparatus pariatur communis ascisco expedita super rem confido consectetur. Cattus arcus vetus adulatio crudelis velut eius."
+}
+
+Status: 201
+
+Response body:
+{
+  "userId": 3,
+  "title": "Sed socius aranea alii amissio cumque stabilis sed.",
+  "body": "Spero clibanus vitae calamitas testimonium ubi harum quibusdam statim. Aperte desparatus pariatur communis ascisco expedita super rem confido consectetur. Cattus arcus vetus adulatio crudelis velut eius.",
+  "id": 101
+}
