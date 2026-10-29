@@ -26,7 +26,7 @@ developer reads: a bug report.
 - **Body:** severity, area, environment; steps to reproduce; expected result with its source (spec, WCAG
   criterion, RFC); actual result; a link to the test line; where the defect is recorded.
 - **Labels:** `bug`, `severity: critical | major | minor | trivial`, `area: security | accessibility | …`.
-- **Closed issues** are history too: a defect fixed by the vendor (BUG-003 on 3s.money) is closed as completed, a
+- **Closed issues** are history too: a defect the vendor fixes is closed as completed, a
   sandbox problem (DEF-3…5 on Petstore) is closed as not planned, with the reason in the body.
 
 The issue form `bug_report.yml` asks for the same fields, so a defect reported by hand looks like the generated
