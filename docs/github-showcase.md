@@ -37,7 +37,7 @@ ones. Severity measures impact, priority measures order of fixing; the form asks
 | Severity | Meaning                                             | Example                                             |
 | -------- | --------------------------------------------------- | --------------------------------------------------- |
 | critical | security or data loss, or a core flow is blocked    | full card number and CCV returned by the API (SS-4) |
-| major    | a feature is wrong or unusable for a group of users | burger menu unreachable by keyboard (BUG-002)       |
+| major    | a feature is wrong or unusable for a group of users | Tab skips the password field on login (WQA-16)      |
 | minor    | wrong, but there is a workaround                    | `Riga, , LV1050` in the address card (UI-TXT-1)     |
 | trivial  | cosmetic or wording                                 | "1 Days" (UI-TXT-2)                                 |
 
