@@ -1,0 +1,18 @@
+POST https://jsonplaceholder.typicode.com/posts
+
+Request body:
+{
+  "userId": 1,
+  "title": "Comes tardus vigor copia trans.",
+  "body": "Valeo talis balbus strues fugit laboriosam coniuratio suadeo attonbitus. Caveo congregatio carpo tandem. Quam utpote ulciscor timor suffragium."
+}
+
+Status: 201
+
+Response body:
+{
+  "userId": 1,
+  "title": "Comes tardus vigor copia trans.",
+  "body": "Valeo talis balbus strues fugit laboriosam coniuratio suadeo attonbitus. Caveo congregatio carpo tandem. Quam utpote ulciscor timor suffragium.",
+  "id": 101
+}
