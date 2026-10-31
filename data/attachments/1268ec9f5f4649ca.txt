@@ -1,0 +1,18 @@
+POST https://jsonplaceholder.typicode.com/posts
+
+Request body:
+{
+  "userId": 5,
+  "title": "Tener aut strenuus spero.",
+  "body": "Tremo tergiversatio consequatur antiquus. Conqueror cultellus alienus collum termes a cras currus surgo. Quasi confugo cavus venia vulticulus."
+}
+
+Status: 201
+
+Response body:
+{
+  "userId": 5,
+  "title": "Tener aut strenuus spero.",
+  "body": "Tremo tergiversatio consequatur antiquus. Conqueror cultellus alienus collum termes a cras currus surgo. Quasi confugo cavus venia vulticulus.",
+  "id": 101
+}
