@@ -1,0 +1,18 @@
+POST https://jsonplaceholder.typicode.com/posts
+
+Request body:
+{
+  "userId": 9,
+  "title": "Ut aetas pel una cur.",
+  "body": "Torrens attero censura aliquid dedico terra. Voluntarius utrimque perferendis adiuvo adipiscor sophismata. Vita decimus carcer subiungo absum suscipit vito amet."
+}
+
+Status: 201
+
+Response body:
+{
+  "userId": 9,
+  "title": "Ut aetas pel una cur.",
+  "body": "Torrens attero censura aliquid dedico terra. Voluntarius utrimque perferendis adiuvo adipiscor sophismata. Vita decimus carcer subiungo absum suscipit vito amet.",
+  "id": 101
+}
