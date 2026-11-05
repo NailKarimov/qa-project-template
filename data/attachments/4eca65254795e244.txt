@@ -1,0 +1,18 @@
+POST https://jsonplaceholder.typicode.com/posts
+
+Request body:
+{
+  "userId": 2,
+  "title": "Ambitus ustulo vinco adipiscor.",
+  "body": "Tempora valeo abstergo corroboro vilicus delibero terminatio adipisci. Quae amplitudo debeo pecco vulariter articulus beneficium talus trepide. Sublime ancilla tonsor dapifer iste abeo cado censura."
+}
+
+Status: 201
+
+Response body:
+{
+  "userId": 2,
+  "title": "Ambitus ustulo vinco adipiscor.",
+  "body": "Tempora valeo abstergo corroboro vilicus delibero terminatio adipisci. Quae amplitudo debeo pecco vulariter articulus beneficium talus trepide. Sublime ancilla tonsor dapifer iste abeo cado censura.",
+  "id": 101
+}
