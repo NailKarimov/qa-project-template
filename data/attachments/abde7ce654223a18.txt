@@ -1,0 +1,18 @@
+POST https://jsonplaceholder.typicode.com/posts
+
+Request body:
+{
+  "userId": 6,
+  "title": "Labore pax adficio sperno.",
+  "body": "Claustrum verumtamen aufero combibo abstergo ab curvo tabula benigne. Uredo sollers tandem arcus appello comes adopto. Comminor adulatio sequi tribuo theologus pecto carmen."
+}
+
+Status: 201
+
+Response body:
+{
+  "userId": 6,
+  "title": "Labore pax adficio sperno.",
+  "body": "Claustrum verumtamen aufero combibo abstergo ab curvo tabula benigne. Uredo sollers tandem arcus appello comes adopto. Comminor adulatio sequi tribuo theologus pecto carmen.",
+  "id": 101
+}
