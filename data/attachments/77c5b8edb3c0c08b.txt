@@ -1,0 +1,18 @@
+POST https://jsonplaceholder.typicode.com/posts
+
+Request body:
+{
+  "userId": 5,
+  "title": "Calcar ea synagoga.",
+  "body": "Demergo thalassinus vobis occaecati admoveo ratione spoliatio reiciendis. Taedium adflicto tolero somniculosus sustineo ipsum acervus ustulo virtus. Depulso virtus conscendo conitor."
+}
+
+Status: 201
+
+Response body:
+{
+  "userId": 5,
+  "title": "Calcar ea synagoga.",
+  "body": "Demergo thalassinus vobis occaecati admoveo ratione spoliatio reiciendis. Taedium adflicto tolero somniculosus sustineo ipsum acervus ustulo virtus. Depulso virtus conscendo conitor.",
+  "id": 101
+}
