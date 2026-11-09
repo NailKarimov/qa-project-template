@@ -1,0 +1,18 @@
+POST https://jsonplaceholder.typicode.com/posts
+
+Request body:
+{
+  "userId": 4,
+  "title": "Sustineo desolo timor vespillo caelestis vilitas.",
+  "body": "Celo comprehendo aeger sint carus termes sit tepesco victoria thymbra. Arx deporto arma tabella uterque creo averto calcar. Suggero vapulus calculus vel vaco volubilis cura depromo supra causa."
+}
+
+Status: 201
+
+Response body:
+{
+  "userId": 4,
+  "title": "Sustineo desolo timor vespillo caelestis vilitas.",
+  "body": "Celo comprehendo aeger sint carus termes sit tepesco victoria thymbra. Arx deporto arma tabella uterque creo averto calcar. Suggero vapulus calculus vel vaco volubilis cura depromo supra causa.",
+  "id": 101
+}
