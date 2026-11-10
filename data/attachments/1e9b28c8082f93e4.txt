@@ -1,0 +1,18 @@
+POST https://jsonplaceholder.typicode.com/posts
+
+Request body:
+{
+  "userId": 10,
+  "title": "Audeo sodalitas somnus adicio utique porro voluptate voro.",
+  "body": "Benevolentia perspiciatis viscus depraedor cibo xiphias caries. Thesis dapifer tam auxilium soleo vir provident. Ustilo sufficio pax consequatur trado."
+}
+
+Status: 201
+
+Response body:
+{
+  "userId": 10,
+  "title": "Audeo sodalitas somnus adicio utique porro voluptate voro.",
+  "body": "Benevolentia perspiciatis viscus depraedor cibo xiphias caries. Thesis dapifer tam auxilium soleo vir provident. Ustilo sufficio pax consequatur trado.",
+  "id": 101
+}
