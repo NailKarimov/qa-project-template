@@ -1,0 +1,18 @@
+POST https://jsonplaceholder.typicode.com/posts
+
+Request body:
+{
+  "userId": 5,
+  "title": "Attero pectus vado coniecto delectatio tam ubi desino.",
+  "body": "Aqua copiose tendo speculum odio. Crebro thymbra spoliatio administratio voco alter damno creo. Cibus illum quos suspendo."
+}
+
+Status: 201
+
+Response body:
+{
+  "userId": 5,
+  "title": "Attero pectus vado coniecto delectatio tam ubi desino.",
+  "body": "Aqua copiose tendo speculum odio. Crebro thymbra spoliatio administratio voco alter damno creo. Cibus illum quos suspendo.",
+  "id": 101
+}
