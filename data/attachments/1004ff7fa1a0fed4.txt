@@ -1,0 +1,18 @@
+POST https://jsonplaceholder.typicode.com/posts
+
+Request body:
+{
+  "userId": 1,
+  "title": "Abscido allatus delego callide utrimque summopere conitor adfero.",
+  "body": "Adhuc audacia quo arguo degero ipsum. Vere super aurum asperiores. Minima certe rerum conicio."
+}
+
+Status: 201
+
+Response body:
+{
+  "userId": 1,
+  "title": "Abscido allatus delego callide utrimque summopere conitor adfero.",
+  "body": "Adhuc audacia quo arguo degero ipsum. Vere super aurum asperiores. Minima certe rerum conicio.",
+  "id": 101
+}
