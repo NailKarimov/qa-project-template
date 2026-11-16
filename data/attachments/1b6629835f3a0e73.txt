@@ -1,0 +1,18 @@
+POST https://jsonplaceholder.typicode.com/posts
+
+Request body:
+{
+  "userId": 8,
+  "title": "Cunabula incidunt cui tersus umquam antea tergum quibusdam.",
+  "body": "Error ventosus artificiose vix tempora occaecati. Desolo torrens tego attero. Adsum aqua veritas."
+}
+
+Status: 201
+
+Response body:
+{
+  "userId": 8,
+  "title": "Cunabula incidunt cui tersus umquam antea tergum quibusdam.",
+  "body": "Error ventosus artificiose vix tempora occaecati. Desolo torrens tego attero. Adsum aqua veritas.",
+  "id": 101
+}
