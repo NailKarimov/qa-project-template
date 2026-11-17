@@ -1,0 +1,18 @@
+POST https://jsonplaceholder.typicode.com/posts
+
+Request body:
+{
+  "userId": 5,
+  "title": "Cognomen surculus autem cavus adsuesco carpo.",
+  "body": "Ipsum surgo tenuis accusator denego crebro alias. Accendo corporis averto velit atrox sufficio absque amplus turbo. Minima perferendis calco."
+}
+
+Status: 201
+
+Response body:
+{
+  "userId": 5,
+  "title": "Cognomen surculus autem cavus adsuesco carpo.",
+  "body": "Ipsum surgo tenuis accusator denego crebro alias. Accendo corporis averto velit atrox sufficio absque amplus turbo. Minima perferendis calco.",
+  "id": 101
+}
