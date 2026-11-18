@@ -1,0 +1,18 @@
+POST https://jsonplaceholder.typicode.com/posts
+
+Request body:
+{
+  "userId": 2,
+  "title": "Arguo denuncio laudantium suus subnecto nisi.",
+  "body": "Auxilium assentator atque bardus vita. Audacia vere ventosus tepesco amplus theologus delinquo constans vociferor. Teneo tibi ubi curto."
+}
+
+Status: 201
+
+Response body:
+{
+  "userId": 2,
+  "title": "Arguo denuncio laudantium suus subnecto nisi.",
+  "body": "Auxilium assentator atque bardus vita. Audacia vere ventosus tepesco amplus theologus delinquo constans vociferor. Teneo tibi ubi curto.",
+  "id": 101
+}
