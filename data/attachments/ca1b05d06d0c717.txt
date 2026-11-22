@@ -1,0 +1,18 @@
+POST https://jsonplaceholder.typicode.com/posts
+
+Request body:
+{
+  "userId": 10,
+  "title": "Ante claustrum cibo.",
+  "body": "Ultra terga nesciunt substantia sperno est. Patrocinor cometes terra tactus quibusdam denuncio iusto. Repellat audio maiores totam perspiciatis sursum cogo."
+}
+
+Status: 201
+
+Response body:
+{
+  "userId": 10,
+  "title": "Ante claustrum cibo.",
+  "body": "Ultra terga nesciunt substantia sperno est. Patrocinor cometes terra tactus quibusdam denuncio iusto. Repellat audio maiores totam perspiciatis sursum cogo.",
+  "id": 101
+}
