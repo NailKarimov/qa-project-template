@@ -75,7 +75,9 @@ containers.
 
 GitHub shows a 1280×640 image when a repository link is shared. The cards are generated with Pillow from the same
 numbers as the README (tests, defects, mutation score) and uploaded in Settings → General → Social preview.
-Regenerate them when the numbers change.
+Regenerate them when the numbers change:
+[`scripts/social_preview.py`](https://github.com/NailKarimov/api-test-automation/blob/main/scripts/social_preview.py)
+in api-test-automation draws them in the palette and the fonts of the projects' own pages.
 
 ## Demo pull request
 
@@ -102,8 +104,8 @@ change, checks, evidence, the decision not to merge.
 - Issues and the board repeat what `docs/test-report.md` already says. The test report stays the source of truth;
   when a defect changes, update both.
 - The Codespaces configuration was not started from this session; the first launch is its test.
-- Social preview images and the board settings are made in the browser; there is no file in the repository that
-  restores them.
+- The board settings are made in the browser and no file restores them. The social preview images are drawn by a
+  script and kept in `docs/img/`, but GitHub has no API for uploading one, so that step is still done by hand.
 
 ## Sources
 
