@@ -730,13 +730,16 @@ gh release create v1.1.0 \
         <h3>Social preview</h3>
         <p class="ru">
           Картинка 1280×640, которую GitHub показывает при вставке ссылки в LinkedIn или Slack. Карточки
-          собраны из тех же цифр, что в README: тесты, дефекты, доля пойманных мутантов. При изменении цифр их
-          нужно перегенерировать и загрузить в Settings → General.
+          собраны из тех же цифр, что в README: тесты, дефекты, доля пойманных мутантов, — скриптом
+          <code>scripts/social_preview.py</code> в api-test-automation, в палитре и шрифтах самих страниц
+          проектов. При изменении цифр их перегенерируют и загружают в Settings → General: API для загрузки у
+          GitHub нет.
         </p>
         <p class="en">
           A 1280×640 image GitHub shows when a link is pasted into LinkedIn or Slack. The cards use the README
-          numbers: tests, defects, mutation score. When the numbers change, regenerate them and upload in
-          Settings → General.
+          numbers — tests, defects, mutation score — and are drawn by <code>scripts/social_preview.py</code> in
+          api-test-automation, in the palette and the fonts of the projects' own pages. When the numbers change,
+          regenerate them and upload in Settings → General: GitHub has no API for the upload.
         </p>
       </div>
     </div>
