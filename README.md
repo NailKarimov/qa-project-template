@@ -15,12 +15,48 @@
 
 Click these links: opening an `.html` file in the file list shows its source code, GitHub does not run it.
 
-Starter template for test automation projects: **Playwright + TypeScript**, UI and API tests in one suite,
-**Allure** reporting with history, **GitHub Actions** CI, and code quality checks on every commit.
+The template behind a portfolio of test-automation projects. It ships **two starters** in one repository:
 
-Click **Use this template** to start a new project with everything below already set up.
+1. **Protocol and device testing** (`python/`) — the backbone of the hardware and energy track: one pytest suite
+   that runs in memory, over virtual serial ports, and on a real board.
+2. **Web UI and API testing** (`src/`) — Playwright + TypeScript, UI and API in one suite.
 
-## What is inside
+Both share the same **GitHub Actions** CI, **Allure** reporting with history, code-quality gates on every commit, and
+the portfolio's Definition of Done. Click **Use this template** to start a new project with everything already set up.
+
+## Protocol and device testing — the primary starter
+
+[`python/`](python/): **Python 3.12 + pytest**, Hypothesis, pyserial, socat, Allure, ruff and mypy. The example
+system under test is a small echo device that speaks CRC-16/MODBUS frames — replace it with the protocol of your
+project (Modbus, inverters, batteries, EV charging).
+
+The idea of this starter: **one suite, three links**, selected by the `BUS_URL` environment variable, so the same
+tests run from the cloud all the way to the bench.
+
+| Link           | `BUS_URL`                | Where it runs                                           |
+| -------------- | ------------------------ | ------------------------------------------------------- |
+| In memory      | `memory://` (default)    | unit and logic, green in CI                             |
+| Virtual serial | `socat://`               | two linked PTYs, the serial path exercised, green in CI |
+| Real board     | `/dev/ttyUSB0` + `HIL=1` | hardware-in-the-loop on a flashed ESP32 at the bench    |
+
+The ESP32 firmware twin is in [`bench/uart-echo/`](bench/uart-echo/). **30 automated tests + 2 hardware-only**, and
+**8/8 planted bugs caught** on both virtual links (`scripts/mutants.py`). The two hardware tests run once a board is
+flashed and connected.
+
+| Suite                    | Tool               | What it proves                                                                       |
+| ------------------------ | ------------------ | ------------------------------------------------------------------------------------ |
+| `tests/test_crc.py`      | pytest             | CRC-16/MODBUS matches the published check value and a real Modbus frame              |
+| `tests/test_frame.py`    | pytest, Hypothesis | Any frame round-trips; any single bit flip is detected; size and address limits      |
+| `tests/test_device.py`   | pytest, socat      | The device answers only its address, stays silent on broadcast and bad CRC, recovers |
+| `tests/test_hardware.py` | pytest, real UART  | No frame lost in 200 round trips; median round trip under 50 ms (bench only)         |
+
+To use it, copy the contents of `python/` to the root of a new repository. Guides:
+[`docs/protocol-starter.md`](docs/protocol-starter.md) ·
+[interactive](https://nailkarimov.github.io/qa-project-template/protocol-starter.html).
+
+## Web UI and API testing — Playwright + TypeScript
+
+The second starter (`src/`, `tests/`): UI and API tests in one suite, with Allure reporting and the same CI.
 
 | Area          | Files                                              | Details                                                                                                                                                     |
 | ------------- | -------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -37,24 +73,14 @@ Click **Use this template** to start a new project with everything below already
 The example tests run against public demo targets: [Sauce Demo](https://www.saucedemo.com) for UI and
 [JSONPlaceholder](https://jsonplaceholder.typicode.com) for API. Replace them with your system under test.
 
-## Python starter for protocol and device testing
-
-[`python/`](python/) is a second starter: **Python 3.12 + pytest**, Hypothesis, pyserial, Allure, ruff and mypy.
-One suite runs unchanged on three links, chosen by `BUS_URL`: in memory, over two virtual serial ports made by
-socat, and on a real board. The example is a small echo device with CRC-16/MODBUS frames; its ESP32 firmware twin
-is in [`bench/uart-echo/`](bench/uart-echo/). 30 tests, 8/8 planted bugs caught on both virtual links.
-
-To use it, copy the contents of `python/` to the root of a new repository. Guide:
-[`docs/protocol-starter.md`](docs/protocol-starter.md) ·
-[interactive](https://nailkarimov.github.io/qa-project-template/protocol-starter.html).
-
 ## Getting started
 
 No local setup: the **Open in GitHub Codespaces** badge starts a browser VS Code with this repository, Node, Python, Java and Docker; the container installs the dependencies and Chromium on creation, then `npm test` works in the terminal.
 
-Requirements: Node.js 22+, Java 17+ (for the Allure CLI).
+Requirements: Node.js 22+, Java 17+ (for the Allure CLI); Python 3.12+ and socat for the protocol starter.
 
 ```bash
+# Web UI + API starter
 npm ci
 npx playwright install chromium
 cp .env.example .env      # optional: change targets or credentials
@@ -72,15 +98,28 @@ npm run typecheck         # TypeScript
 npm run allure:generate && npm run allure:open
 ```
 
+```bash
+# Protocol + device starter
+cd python
+python3 -m venv .venv && . .venv/bin/activate
+pip install -e ".[dev]"
+
+pytest                                  # in memory
+BUS_URL=socat:// pytest                 # through two virtual serial ports
+BUS_URL=/dev/ttyUSB0 HIL=1 pytest       # on the bench, board flashed from bench/uart-echo
+python scripts/mutants.py               # plant bugs one at a time
+```
+
 ## Starting a new project from this template
 
 1. **Use this template** → name the repository → clone it.
-2. Set the targets in `.env.example` and `config/env.ts`.
-3. Replace the example page objects, API clients and tests.
-4. Fill in `docs/test-plan.md` before writing tests and `docs/test-report.md` after the first full run.
-5. In the new repository: **Settings → Pages → Deploy from a branch → `gh-pages` / `(root)`**
+2. Pick the starter you need: `src/` for web UI and API, or `python/` for protocol and device testing.
+3. Set the targets (`.env.example` and `config/env.ts`, or the device under test in `python/src/bus_lab`).
+4. Replace the example page objects, API clients, tests or device model.
+5. Fill in `docs/test-plan.md` before writing tests and `docs/test-report.md` after the first full run.
+6. In the new repository: **Settings → Pages → Deploy from a branch → `gh-pages` / `(root)`**
    to publish the Allure report.
-6. Update the badges and links at the top of this README.
+7. Update the badges and links at the top of this README.
 
 ## Definition of Done for a portfolio project
 
