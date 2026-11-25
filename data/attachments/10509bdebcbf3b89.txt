@@ -1,0 +1,18 @@
+POST https://jsonplaceholder.typicode.com/posts
+
+Request body:
+{
+  "userId": 10,
+  "title": "Sunt strues debitis catena viduo.",
+  "body": "Adflicto turbo cui capillus vehemens vis dolorem coadunatio victoria maxime. Deputo attonbitus tabesco ait audentia terreo arbitro videlicet benevolentia. Usus vester tepidus voluptates convoco cur copiose neque decor."
+}
+
+Status: 201
+
+Response body:
+{
+  "userId": 10,
+  "title": "Sunt strues debitis catena viduo.",
+  "body": "Adflicto turbo cui capillus vehemens vis dolorem coadunatio victoria maxime. Deputo attonbitus tabesco ait audentia terreo arbitro videlicet benevolentia. Usus vester tepidus voluptates convoco cur copiose neque decor.",
+  "id": 101
+}
